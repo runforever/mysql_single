@@ -163,6 +163,10 @@ user@ubuntu:~$ ulimit -n
 ```
 
 ### 硬盘挂载添加 noatime，nobarrier
+编辑 `/etc/fstab`，数据库文件所在硬盘修改为如下：
+```
+/dev/sda3   /data   ext4    defaults,noatime,nobarrier       0   0
+```
 
 ## 参考资料
 + [MySQL性能调优 – 你必须了解的15个重要变量](https://www.centos.bz/2016/11/mysql-performance-tuning-15-config-item/)
