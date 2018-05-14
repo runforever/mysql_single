@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>迁移 MySQL 数据 · GitBook</title>
+        <title>备份 MySQL 数据 · GitBook</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="backup.html" />
+    <link rel="next" href="setup_slave.html" />
     
     
-    <link rel="prev" href="SETUP.html" />
+    <link rel="prev" href="migration.html" />
     
 
     </head>
@@ -115,7 +115,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="migration.html">
+        <li class="chapter " data-level="1.3" data-path="migration.html">
             
                 <a href="migration.html">
             
@@ -128,7 +128,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="backup.html">
+        <li class="chapter active" data-level="1.4" data-path="backup.html">
             
                 <a href="backup.html">
             
@@ -197,7 +197,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >迁移 MySQL 数据</a>
+        <a href="." >备份 MySQL 数据</a>
     </h1>
 </div>
 
@@ -212,23 +212,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x8FC1;&#x79FB;-mysql-&#x6570;&#x636E;">&#x8FC1;&#x79FB; MySQL &#x6570;&#x636E;</h1><h2 id="&#x65B9;&#x6848;&#x8FF7;&#x601D;">&#x65B9;&#x6848;&#x8FF7;&#x601D;</h2><p>&#x7F51;&#x4E0A;&#x641C;&#x7D22;&#x5230;&#x7684;&#x65B9;&#x6848;&#xFF1A;</p><ol><li>&#x642D;&#x5EFA;&#x4ECE;&#x5E93;&#xFF0C;&#x4E3B;&#x4ECE;&#x540C;&#x6B65;&#x5B8C;&#x6210;&#x540E;&#x5207;&#x6362;&#x4E3B;&#x4ECE;&#x3002;
+                                <h1 id="&#x5907;&#x4EFD;&#x65B9;&#x6848;">&#x5907;&#x4EFD;&#x65B9;&#x6848;</h1><h2 id="&#x65B9;&#x6848;&#x8FF7;&#x601D;">&#x65B9;&#x6848;&#x8FF7;&#x601D;</h2><ol><li>&#x4F7F;&#x7528; mysqldump&#x3002;
 </li>
-<li>&#x4F7F;&#x7528; Rsync &#x505C;&#x673A;&#x8FC1;&#x79FB;&#x6570;&#x636E;&#x3002;
+<li>&#x4F7F;&#x7528; xtrabackup&#x3002;
 </li>
-<li>&#x4F7F;&#x7528; xtrabackup &#x505C;&#x673A;&#x8FC1;&#x79FB;&#x6570;&#x636E;&#x3002;
+<li>&#x4F7F;&#x7528; mydumper&#x3002;
+</li>
+<li>&#x642D;&#x5EFA;&#x4ECE;&#x5E93;&#x5E76;&#x4E14;&#x8BBE;&#x7F6E;&#x5EF6;&#x65F6; 3 &#x4E2A;&#x5C0F;&#x65F6;&#x540C;&#x6B65;&#x4E3B;&#x5E93;&#x3002;
 </li></ol>
-<h2 id="&#x5F53;&#x524D;&#x573A;&#x666F;&#x6761;&#x4EF6;&#x9650;&#x5236;">&#x5F53;&#x524D;&#x573A;&#x666F;&#x6761;&#x4EF6;&#x9650;&#x5236;</h2><p>&#x539F;&#x670D;&#x52A1;&#x5668;&#x4F7F;&#x7528; Docker&#xFF0C;&#x6CA1;&#x6709;&#x5F00;&#x542F; GTID &#x548C; Binlog&#xFF0C;&#x6570;&#x636E;&#x5E93;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x6709; 113G&#xFF0C;&#x8981;&#x6C42;&#x5C3D;&#x5FEB;&#x5C06;&#x6570;&#x636E;&#x5E93;&#x8FC1;&#x79FB;&#xFF0C;&#x6700;&#x597D; 10 &#x5206;&#x949F;&#x4EE5;&#x5185;&#x3002;</p><p>&#x7531;&#x4E8E;&#x4F7F;&#x7528;&#x4E86; Docker&#xFF0C;&#x6545;&#x4F7F;&#x7528; xtrabackup &#x5DE5;&#x5177;&#x6765;&#x505A;&#x5C31;&#x76F8;&#x5BF9;&#x9EBB;&#x70E6;&#x4E86;&#xFF0C;&#x76F4;&#x63A5; pass &#x6389;&#xFF0C;&#x90A3;&#x5C31;&#x6D4B;&#x8BD5;&#x7528; Rsync &#x540C;&#x6B65;&#x6548;&#x679C;&#x5982;&#x4F55;&#x5427;&#xFF0C;&#x7ECF;&#x8FC7;&#x5B9E;&#x6D4B;&#xFF0C;&#x5168;&#x91CF;&#x540C;&#x6B65;&#x9700;&#x8981; 40 &#x5206;&#x949F;&#x5DE6;&#x53F3;&#xFF0C;&#x540E;&#x7EED;&#x7684;&#x589E;&#x91CF;&#x540C;&#x6B65;&#x4E5F;&#x9700;&#x8981; 40 &#x5206;&#x949F;&#xFF0C;&#x6709;&#x4E24;&#x4E2A;&#x8868;&#x7684;&#x6570;&#x636E;&#x5E93;&#x6587;&#x4EF6;&#x5206;&#x522B;&#x662F; 65G &#x548C; 37G&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;&#x4E25;&#x91CD;&#x5F71;&#x54CD;&#x540C;&#x6B65;&#x65F6;&#x95F4;&#xFF0C;&#x6240;&#x4EE5; Rsync &#x65B9;&#x6848;&#x4E5F;&#x4F7F;&#x7528;&#x4E0D;&#x4E86;&#x3002;</p><p>&#x7EE7;&#x7EED;&#x8C03;&#x7814;&#x65B9;&#x6848;&#xFF0C;&#x53D1;&#x73B0;&#x4E00;&#x79CD;&#x6D41;&#x5F0F;&#x6253;&#x5305;&#x4E0A;&#x4F20;&#x65B9;&#x6848;&#xFF0C;&#x914D;&#x5408; pigz &#x538B;&#x7F29;&#x6709;&#x5947;&#x6548;&#xFF0C;&#x65B9;&#x6848;&#x5982;&#x4E0B;&#xFF1A;</p><pre><code>&#x78C1;&#x76D8;&#x8BFB;&#x53D6;----&gt;&#x6253;&#x5305;----&gt;&#x538B;&#x7F29;------&gt;&#x4F20;&#x8F93;----&gt;&#x89E3;&#x538B;&#x7F29;--&gt;&#x62C6;&#x5305;----&gt;&#x843D;&#x76D8;
-           |-&gt;tar  |-&gt;gzip   |-&gt;ssh   |-&gt;gzip |-&gt;tar</code></pre>
-<p><strong>&#x7ECF;&#x8FC7;&#x6D4B;&#x8BD5;&#xFF0C;&#x540C;&#x6B65;&#x6570;&#x636E;&#x53EA;&#x8981; 10 &#x5206;&#x949F;&#x5DE6;&#x53F3;&#xFF0C;&#x7B26;&#x5408;&#x8981;&#x6C42;&#x3002;</strong></p><p>&#x5177;&#x4F53;&#x4F7F;&#x7528;&#xFF1A;</p><ol><li>&#x6E90;&#x4E3B;&#x673A;&#x548C;&#x76EE;&#x7684;&#x673A;&#x5668;&#x5B89;&#x88C5; pigz&#xFF0C;<code>apt-get install pigz</code>&#x3002;
-</li>
-<li>&#x4F7F;&#x7528; <code>tar -c 130/data | pigz | ssh root@yourip &quot;pigz -d | tar -xC /data/130&quot;</code> &#x8FDB;&#x884C;&#x6570;&#x636E;&#x540C;&#x6B65;&#x3002;
-</li></ol>
-<h2 id="&#x540E;&#x7EED;&#x914D;&#x7F6E;">&#x540E;&#x7EED;&#x914D;&#x7F6E;</h2><ol><li>&#x4FEE;&#x6539;&#x76EE;&#x5F55;&#x6743;&#x9650;&#x4E3A; <code>mysql:mysql</code>&#x3002;
-</li>
-<li>&#x542F;&#x52A8;&#x670D;&#x52A1; <code>service mysql start</code>&#x3002;
-</li></ol>
-<h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2><p><a href="https://lvtao.net/tool/1878.html" target="_blank">linux&#x4E3B;&#x673A;&#x4E4B;&#x95F4;&#x5FEB;&#x901F;&#x9AD8;&#x6548;&#x7684;&#x62F7;&#x8D1D;&#x5927;&#x6570;&#x636E;&#x6587;&#x4EF6;</a></p>
+<h2 id="&#x80CC;&#x666F;">&#x80CC;&#x666F;</h2><p>&#x6570;&#x636E;&#x5E93;&#x6587;&#x4EF6;&#x6709; 113G&#xFF0C;&#x505A;&#x8868; migrate &#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x5148;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x8981;&#x6C42;&#x5C3D;&#x5FEB;&#x5907;&#x4EFD;&#x5B8C;&#x6210;&#x3002;</p><h2 id="mysqldump">mysqldump</h2><p>mysqldump &#x9002;&#x5408;&#x6570;&#x636E;&#x91CF;&#x6BD4;&#x8F83;&#x5C0F;&#x7684;&#x65F6;&#x5019;&#x4F7F;&#x7528;&#xFF0C;&#x4F1A;&#x9501;&#x8868;&#xFF0C;pass&#x3002;</p><h2 id="mydumper">mydumper</h2><p>&#x4E0D;&#x7965;</p><h2 id="&#x642D;&#x5EFA;&#x4ECE;&#x5E93;&#x5907;&#x4EFD;">&#x642D;&#x5EFA;&#x4ECE;&#x5E93;&#x5907;&#x4EFD;</h2><p>&#x642D;&#x5EFA;&#x65F6;&#x95F4;&#x8F83;&#x957F;&#xFF0C;&#x8003;&#x8651;&#x4EE5;&#x540E;&#x505A;&#x3002;</p><h2 id="xtrabackup">xtrabackup</h2><p>&#x652F;&#x6301;&#x70ED;&#x5907;&#x4EFD;&#xFF0C;&#x4E0D;&#x9501;&#x8868;&#xFF0C;&#x652F;&#x6301;&#x589E;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x5C31;&#x5B83;&#x4E86;&#x3002;</p><h3 id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</h3><p>&#x6839;&#x636E; <a href="https://www.percona.com/doc/percona-xtrabackup/LATEST/installation.html" target="_blank">&#x5B89;&#x88C5;&#x6587;&#x6863;</a> &#x5C06;&#x5DE5;&#x5177;&#x5B89;&#x88C5;&#x597D;&#x3002;</p><h3 id="&#x5168;&#x91CF;&#x5907;&#x4EFD;">&#x5168;&#x91CF;&#x5907;&#x4EFD;</h3><p>&#x6267;&#x884C;&#x4E00;&#x6B21;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x5907;&#x4EFD;&#x538B;&#x7F29;</p><pre><code>xtrabackup --user=youruser --password=yourpassword --backup --compress --compress-threads=6 --target-dir=/backup/compressd/1</code></pre>
+<h3 id="&#x6062;&#x590D;&#x5907;&#x4EFD;">&#x6062;&#x590D;&#x5907;&#x4EFD;</h3><p>&#x89E3;&#x538B;</p><pre><code>xtrabackup --user=youruser --password=yourpassword --parallel=6 --decompress --target-dir=/backup/compressd/1</code></pre>
+<h3 id="&#x51C6;&#x5907;&#x5907;&#x4EFD;">&#x51C6;&#x5907;&#x5907;&#x4EFD;</h3><pre><code>xtrabackup --user=youruser --password=yourpassword --prepare --target-dir=/backup/compressd/1</code></pre>
+<h3 id="&#x6062;&#x590D;&#x5907;&#x4EFD;">&#x6062;&#x590D;&#x5907;&#x4EFD;</h3><pre><code>xtrabackup --user=youruser --password=yourpassword --copy-back --target-dir=/backup/compressd/1</code></pre>
+<h2 id="&#x5F53;&#x524D;&#x73AF;&#x5883;&#x7684;&#x65B9;&#x6848;&#x9009;&#x62E9;">&#x5F53;&#x524D;&#x73AF;&#x5883;&#x7684;&#x65B9;&#x6848;&#x9009;&#x62E9;</h2><p>&#x5168;&#x91CF;&#x5907;&#x4EFD; 5 &#x5206;&#x949F;&#x5DE6;&#x53F3;&#xFF0C;&#x65F6;&#x95F4;&#x53EF;&#x4EE5;&#x63A5;&#x53D7;&#xFF0C;&#x6682;&#x65F6;&#x4E0D;&#x8003;&#x8651;&#x5F15;&#x5165;&#x589E;&#x91CF;&#x5907;&#x4EFD;&#x6765;&#x63D0;&#x9AD8;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x5C06;&#x5907;&#x4EFD;&#x547D;&#x4EE4;&#x5199;&#x6210;&#x811A;&#x672C;&#xFF0C;&#x6BCF;&#x5929;&#x51CC;&#x6668;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x5907;&#x4EFD;&#x4FDD;&#x7559;&#x65F6;&#x95F4;&#x4E3A; 14 &#x5929;&#x3002;</p><h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2><p><a href="https://www.percona.com/doc/percona-xtrabackup/LATEST/index.html" target="_blank">Percona XtraBackup - Documentation</a></p>
                                 
                                 </section>
                             
@@ -255,12 +251,12 @@
 
             
                 
-                <a href="SETUP.html" class="navigation navigation-prev " aria-label="Previous page: 安装特定版本的 MySQL 并调优">
+                <a href="migration.html" class="navigation navigation-prev " aria-label="Previous page: 迁移 MySQL 数据">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="backup.html" class="navigation navigation-next " aria-label="Next page: 备份 MySQL 数据">
+                <a href="setup_slave.html" class="navigation navigation-next " aria-label="Next page: 搭建从库">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -271,7 +267,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"迁移 MySQL 数据","level":"1.3","depth":1,"next":{"title":"备份 MySQL 数据","level":"1.4","depth":1,"path":"backup.md","ref":"backup.md","articles":[]},"previous":{"title":"安装特定版本的 MySQL 并调优","level":"1.2","depth":1,"path":"SETUP.md","ref":"SETUP.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"migration.md","mtime":"2018-05-10T08:52:57.459Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-14T13:28:24.998Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"备份 MySQL 数据","level":"1.4","depth":1,"next":{"title":"搭建从库","level":"1.5","depth":1,"path":"setup_slave.md","ref":"setup_slave.md","articles":[]},"previous":{"title":"迁移 MySQL 数据","level":"1.3","depth":1,"path":"migration.md","ref":"migration.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"backup.md","mtime":"2018-05-10T10:07:09.981Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-14T13:28:24.998Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

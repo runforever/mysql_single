@@ -5,3 +5,4 @@
 * [迁移 MySQL 数据](migration.md)
 * [备份 MySQL 数据](backup.md)
 * [搭建从库](setup_slave.md)
+* [监控](monitor.md)
