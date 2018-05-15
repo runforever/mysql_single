@@ -6,3 +6,6 @@
 * [备份 MySQL 数据](backup.md)
 * [搭建从库](setup_slave.md)
 * [监控](monitor.md)
+* [账号管理](account.md)
+* [运行过程调优](profile.md)
+* [安全设置](security.md)

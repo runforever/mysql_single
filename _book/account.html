@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html lang="" >
     <head>
-        <title>监控 · GitBook</title>
+        <title>账号管理 · GitBook</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="account.html" />
+    <link rel="next" href="profile.html" />
     
     
-    <link rel="prev" href="setup_slave.html" />
+    <link rel="prev" href="monitor.html" />
     
 
     </head>
@@ -154,7 +154,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.6" data-path="monitor.html">
+        <li class="chapter " data-level="1.6" data-path="monitor.html">
             
                 <a href="monitor.html">
             
@@ -167,7 +167,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.7" data-path="account.html">
+        <li class="chapter active" data-level="1.7" data-path="account.html">
             
                 <a href="account.html">
             
@@ -236,7 +236,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >监控</a>
+        <a href="." >账号管理</a>
     </h1>
 </div>
 
@@ -251,7 +251,34 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x76D1;&#x63A7;&#x76F8;&#x5173;">&#x76D1;&#x63A7;&#x76F8;&#x5173;</h1><p>&#x5F85;&#x6DFB;&#x52A0;...</p>
+                                <h1 id="mysql-&#x8D26;&#x53F7;&#x7BA1;&#x7406;">MySQL &#x8D26;&#x53F7;&#x7BA1;&#x7406;</h1><h2 id="&#x80CC;&#x666F;">&#x80CC;&#x666F;</h2><p>&#x76EE;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528; MySQL &#x90FD;&#x53EA;&#x7528;&#x4E86; root &#x8D26;&#x53F7;&#xFF0C;&#x4E3A;&#x4E86;&#x5B89;&#x5168;&#x8D77;&#x89C1;&#xFF0C;&#x5E94;&#x8BE5;&#x5BF9;&#x6BCF;&#x79CD;&#x4E1A;&#x52A1;&#x573A;&#x666F;&#x5EFA;&#x7ACB;&#x76F8;&#x5E94;&#x7684;&#x8D26;&#x53F7;&#x5E76;&#x63A7;&#x5236;&#x597D;&#x6743;&#x9650;&#xFF0C;&#x573A;&#x666F;&#x5982;&#x4E0B;&#xFF1A;</p><ol><li>Xtrabackup &#x5907;&#x4EFD;&#x548C;&#x6062;&#x590D;&#x8D26;&#x53F7;&#x3002;
+</li>
+<li>&#x4E3B;&#x4ECE;&#x540C;&#x6B65;&#x8D26;&#x53F7;&#x3002;
+</li>
+<li>&#x5E94;&#x7528;&#x7CFB;&#x7EDF;&#x8BBF;&#x95EE;&#x6570;&#x636E;&#x5E93;&#x8D26;&#x53F7;&#x3002;
+</li></ol>
+<p>&#x53E6;&#x5916;&#xFF0C;&#x4FEE;&#x6539; Root &#x8D26;&#x53F7;&#x5BC6;&#x7801;&#xFF0C;&#x5E76;&#x4E14;&#x614E;&#x7528; Root &#x8D26;&#x6237;&#x3002;</p><h2 id="mysql-&#x8D26;&#x6237;&#x7BA1;&#x7406;">MySQL &#x8D26;&#x6237;&#x7BA1;&#x7406;</h2><p>&#x521B;&#x5EFA;&#x8D26;&#x53F7;</p><pre><code>CREATE USER &apos;backup&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;xxxxx&apos;;</code></pre>
+<p>&#x6388;&#x6743;</p><pre><code>GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO &apos;bkpuser&apos;@&apos;localhost&apos;;
+FLUSH PRIVILEGES;</code></pre>
+<p>&#x4FEE;&#x6539;&#x5BC6;&#x7801;</p><pre><code>ALTER USER &apos;root&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;password&apos;;</code></pre>
+<p>&#x5220;&#x9664;&#x8D26;&#x6237;</p><pre><code>DROP USER &apos;jeffrey&apos;@&apos;localhost&apos;;</code></pre>
+<p>&#x67E5;&#x770B;&#x6240;&#x6709;&#x8D26;&#x6237;</p><pre><code>SELECT USER, HOST FROM mysql.user;</code></pre>
+<p>&#x67E5;&#x770B;&#x8D26;&#x6237;&#x6388;&#x6743;</p><pre><code>show grants for&apos;cactiuser&apos;@&apos;%&apos;;</code></pre>
+<h3 id="&#x521B;&#x5EFA;-xtrabackup-&#x5168;&#x91CF;&#x5907;&#x4EFD;&#x8D26;&#x6237;">&#x521B;&#x5EFA; Xtrabackup &#x5168;&#x91CF;&#x5907;&#x4EFD;&#x8D26;&#x6237;</h3><p>&#x6839;&#x636E; <a href="https://www.percona.com/doc/percona-xtrabackup/LATEST/innobackupex/privileges.html#permissions-and-privileges-needed" target="_blank">Xtrabackup &#x6587;&#x6863;</a>&#xFF0C;&#x5982;&#x56FE;&#xFF1A;</p><p><img alt="xtrabackup" src="http://cdn.defcoding.com/36F3B40B-39C5-4F0D-9899-B77BA1039030.png"></p><pre><code>mysql&gt; CREATE USER &apos;bkpuser&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;s3cret&apos;;
+mysql&gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT, PROCESS ON *.* TO &apos;bkpuser&apos;@&apos;localhost&apos;;
+mysql&gt; FLUSH PRIVILEGES;</code></pre>
+<h3 id="&#x4E3B;&#x4ECE;&#x540C;&#x6B65;&#x8D26;&#x53F7;&#x521B;&#x5EFA;">&#x4E3B;&#x4ECE;&#x540C;&#x6B65;&#x8D26;&#x53F7;&#x521B;&#x5EFA;</h3><pre><code>create user &apos;ReplicaUser&apos;@&apos;%&apos; identified by &apos;xxxxxx&apos;;
+grant replication slave on *.* to &apos;ReplicaUser&apos;@&apos;%&apos; identified by &apos;xxxxxx&apos;;
+flush privileges;</code></pre>
+<h3 id="&#x5E94;&#x7528;&#x8BFB;&#x5199;&#x6570;&#x636E;&#x5E93;&#x8D26;&#x53F7;&#x521B;&#x5EFA;">&#x5E94;&#x7528;&#x8BFB;&#x5199;&#x6570;&#x636E;&#x5E93;&#x8D26;&#x53F7;&#x521B;&#x5EFA;</h3><pre><code>create user &apos;youruser&apos;@&apos;%&apos; identified by &apos;xxxxxx&apos;;
+grant all privileges on yourdb.* to &apos;youruser&apos;@&apos;%&apos; identified by &apos;xxxxxx&apos;;
+flush privileges;</code></pre>
+<h3 id="&#x4FEE;&#x6539;-root-&#x5BC6;&#x7801;">&#x4FEE;&#x6539; root &#x5BC6;&#x7801;</h3><pre><code>ALTER USER &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;password&apos;;</code></pre>
+<h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2><ul><li><a href="https://www.percona.com/doc/percona-xtrabackup/LATEST/innobackupex/privileges.html#permissions-and-privileges-needed" target="_blank">Connection and Privileges Needed</a>
+</li>
+<li><a href="https://dev.mysql.com/doc/refman/5.7/en/user-account-management.html" target="_blank">MySQL User Account Management</a>
+</li></ul>
+
                                 
                                 </section>
                             
@@ -278,12 +305,12 @@
 
             
                 
-                <a href="setup_slave.html" class="navigation navigation-prev " aria-label="Previous page: 搭建从库">
+                <a href="monitor.html" class="navigation navigation-prev " aria-label="Previous page: 监控">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="account.html" class="navigation navigation-next " aria-label="Next page: 账号管理">
+                <a href="profile.html" class="navigation navigation-next " aria-label="Next page: 运行过程调优">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -294,7 +321,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"监控","level":"1.6","depth":1,"next":{"title":"账号管理","level":"1.7","depth":1,"path":"account.md","ref":"account.md","articles":[]},"previous":{"title":"搭建从库","level":"1.5","depth":1,"path":"setup_slave.md","ref":"setup_slave.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"monitor.md","mtime":"2018-05-14T13:08:20.444Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-14T13:28:24.998Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"账号管理","level":"1.7","depth":1,"next":{"title":"运行过程调优","level":"1.8","depth":1,"path":"profile.md","ref":"profile.md","articles":[]},"previous":{"title":"监控","level":"1.6","depth":1,"path":"monitor.md","ref":"monitor.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"account.md","mtime":"2018-05-15T04:07:35.978Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-14T13:28:24.998Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

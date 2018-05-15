@@ -167,6 +167,45 @@
             
         </li>
     
+        <li class="chapter " data-level="1.7" data-path="account.html">
+            
+                <a href="account.html">
+            
+                    
+                    账号管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="profile.html">
+            
+                <a href="profile.html">
+            
+                    
+                    运行过程调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="security.html">
+            
+                <a href="security.html">
+            
+                    
+                    安全设置
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
 
@@ -222,7 +261,7 @@
 </li>
 <li>&#x6253;&#x5F00; MySQL shell &#x8BBE;&#x7F6E;&#x4E3B;&#x5E93;&#x4FE1;&#x606F;&#x5E76;&#x542F;&#x52A8;&#x4ECE;&#x5E93;&#x590D;&#x5236;&#x3002;
 </li></ol>
-<h2 id="&#x8BE6;&#x7EC6;&#x6B65;&#x9AA4;">&#x8BE6;&#x7EC6;&#x6B65;&#x9AA4;</h2><h3 id="&#x914D;&#x7F6E;-mysql">&#x914D;&#x7F6E; MySQL</h3><p>server_id &#x9700;&#x8981;&#x548C;&#x4E3B;&#x5E93;&#x4E0D;&#x540C;&#x3002;</p><h3 id="&#x4F7F;&#x7528;-xtrabackup-&#x5907;&#x4EFD;&#x5E76;-prepare-&#x6570;&#x636E;">&#x4F7F;&#x7528; Xtrabackup &#x5907;&#x4EFD;&#x5E76; prepare &#x6570;&#x636E;</h3><p>&#x4E4B;&#x524D;&#x6709;&#x8BB2;&#x8FC7;&#xFF0C;&#x6B64;&#x5904;&#x7565;......</p><h3 id="&#x67E5;&#x770B;-gtid">&#x67E5;&#x770B; GTID</h3><p>&#x6253;&#x5F00; <code>/data/mysql/xtrabackup_binlog_info</code> &#x67E5;&#x770B; GTID&#xFF0C;&#x5982;&#x56FE;&#xFF1A;</p><p><img alt="gtid" src="http://cdn.defcoding.com/1E67D837-0B5D-4C20-94DD-329A28DE1D09.png"></p><p><code>gtid</code> &#x53F7;&#xFF1A;<code>1175089b-bdf0-11e7-9694-0242ac110002:1-804216</code></p><h3 id="&#x6062;&#x590D;&#x5907;&#x4EFD;&#x5230;&#x4ECE;&#x5E93;&#x4E2D;">&#x6062;&#x590D;&#x5907;&#x4EFD;&#x5230;&#x4ECE;&#x5E93;&#x4E2D;</h3><p>&#x4F7F;&#x7528; <a href="migration.html">&#x8FC1;&#x79FB; MySQL</a> &#x7684;&#x65B9;&#x6CD5;&#x8FC1;&#x79FB;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x3002;</p><h3 id="&#x8BBE;&#x7F6E;&#x4ECE;&#x5E93;">&#x8BBE;&#x7F6E;&#x4ECE;&#x5E93;</h3><p>&#x4E3B;&#x5E93;&#x4E0A;&#x7EBF;&#x521B;&#x5EFA;&#x8D26;&#x53F7;&#x548C;&#x8BBE;&#x7F6E;&#x6743;&#x9650;</p><pre><code>create user &apos;ReplicaUser&apos;@&apos;%&apos; identified by &apos;xxxxxx&apos;;
+<h2 id="&#x8BE6;&#x7EC6;&#x6B65;&#x9AA4;">&#x8BE6;&#x7EC6;&#x6B65;&#x9AA4;</h2><h3 id="&#x914D;&#x7F6E;-mysql">&#x914D;&#x7F6E; MySQL</h3><p>server_id &#x9700;&#x8981;&#x548C;&#x4E3B;&#x5E93;&#x4E0D;&#x540C;&#x3002;</p><h3 id="&#x4F7F;&#x7528;-xtrabackup-&#x5907;&#x4EFD;&#x5E76;-prepare-&#x6570;&#x636E;">&#x4F7F;&#x7528; Xtrabackup &#x5907;&#x4EFD;&#x5E76; prepare &#x6570;&#x636E;</h3><p>&#x67E5;&#x770B; * <a href="backup.html">&#x5907;&#x4EFD; MySQL &#x6570;&#x636E;</a> &#x4E2D;&#x7684;&#x6B65;&#x9AA4;&#x3002;</p><h3 id="&#x67E5;&#x770B;-gtid">&#x67E5;&#x770B; GTID</h3><p>&#x6253;&#x5F00; <code>/data/mysql/xtrabackup_binlog_info</code> &#x67E5;&#x770B; GTID&#xFF0C;&#x5982;&#x56FE;&#xFF1A;</p><p><img alt="gtid" src="http://cdn.defcoding.com/1E67D837-0B5D-4C20-94DD-329A28DE1D09.png"></p><p><code>gtid</code> &#x53F7;&#xFF1A;<code>1175089b-bdf0-11e7-9694-0242ac110002:1-804216</code></p><h3 id="&#x6062;&#x590D;&#x5907;&#x4EFD;&#x5230;&#x4ECE;&#x5E93;&#x4E2D;">&#x6062;&#x590D;&#x5907;&#x4EFD;&#x5230;&#x4ECE;&#x5E93;&#x4E2D;</h3><p>&#x4F7F;&#x7528; <a href="migration.html">&#x8FC1;&#x79FB; MySQL</a> &#x7684;&#x65B9;&#x6CD5;&#x8FC1;&#x79FB;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x3002;</p><h3 id="&#x8BBE;&#x7F6E;&#x4ECE;&#x5E93;">&#x8BBE;&#x7F6E;&#x4ECE;&#x5E93;</h3><p>&#x4E3B;&#x5E93;&#x4E0A;&#x7EBF;&#x521B;&#x5EFA;&#x8D26;&#x53F7;&#x548C;&#x8BBE;&#x7F6E;&#x6743;&#x9650;</p><pre><code>create user &apos;ReplicaUser&apos;@&apos;%&apos; identified by &apos;xxxxxx&apos;;
 grant replication slave on *.* to &apos;ReplicaUser&apos;@&apos;%&apos; identified by &apos;xxxxxx&apos;;
 flush privileges;</code></pre>
 <p>&#x4ECE;&#x5E93;&#x4E0A;&#x8BBE;&#x7F6E;</p><pre><code>reset master;
@@ -288,7 +327,7 @@ show slave status;</code></pre>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"搭建从库","level":"1.5","depth":1,"next":{"title":"监控","level":"1.6","depth":1,"path":"monitor.md","ref":"monitor.md","articles":[]},"previous":{"title":"备份 MySQL 数据","level":"1.4","depth":1,"path":"backup.md","ref":"backup.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"setup_slave.md","mtime":"2018-05-14T14:08:09.998Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-14T13:28:24.998Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"搭建从库","level":"1.5","depth":1,"next":{"title":"监控","level":"1.6","depth":1,"path":"monitor.md","ref":"monitor.md","articles":[]},"previous":{"title":"备份 MySQL 数据","level":"1.4","depth":1,"path":"backup.md","ref":"backup.md","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"setup_slave.md","mtime":"2018-05-15T02:48:52.005Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-14T13:28:24.998Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
