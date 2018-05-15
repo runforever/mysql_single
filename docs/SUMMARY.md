@@ -9,3 +9,4 @@
 * [账号管理](account.md)
 * [运行过程调优](profile.md)
 * [安全设置](security.md)
+* [常用工具](tools.md)
