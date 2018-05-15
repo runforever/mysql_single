@@ -8,7 +8,7 @@
 3、zabbix-server添加mysql的监控服务。
 
 ## 详细步骤
-###zabbix-server端导入percona的mysql监控模板
+### zabbix-server端导入percona的mysql监控模板
  1、目前针对percona自带mysql监控模板只支持zabbix-2.x版本，针对3.0及以上版本percona自带mysql监控模板无法导入到zabbix-server。  
  2、针对zabbix-3.0以上版本，目前mysql模本配置文件可参考:
   	http://jaminzhang.github.io/soft-conf/Zabbix/zbx_percona_mysql_template.xml  
@@ -19,7 +19,7 @@
 
 ![gtid](https://img-blog.csdn.net/20171212142302026?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzE2MTMwNTU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-###zabbix-client安装percona模块
+### zabbix-client安装percona模块
 1、首先percona运行需要依赖PHP环境，本地首先安装php： apt-get install php php-mysql  
 
 2、登录percona官网下载安装包： https://www.percona.com/downloads/percona-monitoring-plugins/  
@@ -68,7 +68,7 @@ if [ "$ITEM" = "running-slave" ]; then
 7、重启zabbix-client。
   service zabbix-agent restart
 
-###zabbix-server添加mysql的监控服务
+### zabbix-server添加mysql的监控服务
 
 在zabbix hosts里面的templates里面添加percona mysql 的连接，就可以加入percona mysql模版监控了  
 
