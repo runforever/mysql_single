@@ -71,6 +71,13 @@ grant all privileges on yourdb.* to 'youruser'@'%' identified by 'xxxxxx';
 flush privileges;
 ```
 
+### zabbix 监控账号创建
+```
+create user 'monitor'@'localhost' identified by 'xxxxxx';
+grant SELECT,PROCESS,SUPER,REPLICATION CLIENT on *.* to 'monitor'@'localhost' identified by 'xxxxxx';
+flush privileges;
+```
+
 ### 修改 root 密码
 ```
 ALTER USER 'root'@'%' IDENTIFIED BY 'password';
