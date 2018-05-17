@@ -42,6 +42,11 @@ SELECT USER, HOST FROM mysql.user;
 show grants for'cactiuser'@'%';
 ```
 
+修改账号
+```
+RENAME USER 'jeffrey'@'localhost' TO 'jeff'@'127.0.0.1';
+```
+
 ### 创建 Xtrabackup 全量备份账户
 根据 [Xtrabackup 文档](https://www.percona.com/doc/percona-xtrabackup/LATEST/innobackupex/privileges.html#permissions-and-privileges-needed)，如图：
 
@@ -70,6 +75,12 @@ flush privileges;
 ```
 ALTER USER 'root'@'%' IDENTIFIED BY 'password';
 ```
+
+## 总结
+为了提高安全性，创建新账号时最好限定访问 IP 地址，不要使用 '%'，例如：
+
+1. 限定单个 IP：`CREATE USER 'foo'@'192.168.1.1' IDENTIFIED BY 'xxxxx';`
+2. 限定网段：`CREATE USER 'foo'@'192.168.1.%' IDENTIFIED BY 'xxxxx';`
 
 ## 参考
 + [Connection and Privileges Needed](https://www.percona.com/doc/percona-xtrabackup/LATEST/innobackupex/privileges.html#permissions-and-privileges-needed)
