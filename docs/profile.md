@@ -8,3 +8,9 @@
 
 ### max_connetions
 待添加
+
+### table_open_cache
+待添加
+
+### innodb_log_file_size
+待添加

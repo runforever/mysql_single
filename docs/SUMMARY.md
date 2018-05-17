@@ -10,3 +10,6 @@
 * [运行过程调优](profile.md)
 * [安全设置](security.md)
 * [常用工具](tools.md)
+* [迁移 binlog 目录](binlog_migration.md)
+* [mysqlfailover](mysqlfailover.md)
+* [proxysql](proxysql.md)
