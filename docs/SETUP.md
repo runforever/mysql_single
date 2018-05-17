@@ -87,13 +87,15 @@ relay_log_recovery = 1
 log-slave-updates = 1
 ```
 
+*binlog 和数据文件最好放在不同的磁盘上，提高数据库磁盘的性能。*
+
 #### server_id
 保证每台 MySQL 的配置不一样，其他参数根据自身需要配置。
 
 ## Linux 运行环境调优
 修改 CPU 运行模式，磁盘 IO 调度算法，关闭 swap 和最大文件数，硬盘挂载添加 noatime，nobarrier。
 
-### 关闭 NUMA 
+### 关闭 NUMA
 Ubuntu 14.04 和 16.04 编辑 `/etc/default/grub`
 ```
 GRUB_CMDLINE_LINUX_DEFAULT="numa=off"
