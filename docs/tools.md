@@ -5,7 +5,7 @@
 
 如图：
 
-待添加。。。
+![innodb buffer](http://cdn.defcoding.com/FA21F466-2039-4B81-AE1A-B862873F0426.png)
 
 ## pt-query-digest
 [pt-query-digest](https://www.percona.com/doc/percona-toolkit/LATEST/pt-query-digest.html) 用于分析 MySQL 的慢查询日志。
@@ -21,8 +21,8 @@
 
 内存信息：
 
-待添加。。。
+![Performance Metrics](http://cdn.defcoding.com/862A5046-1D0B-4E0A-B765-8F62EF617F48.png)
 
 优化建议：
 
-待添加。。。
+![Recommendations](http://cdn.defcoding.com/6A397F1F-B59F-4762-9149-DB46C140EF4D.png)
