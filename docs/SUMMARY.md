@@ -12,5 +12,5 @@
 * [安全设置](security.md)
 * [常用工具](tools.md)
 * [迁移 binlog 目录](binlog_migration.md)
-* [mysqlfailover](mysqlfailover.md)
+* [高可用方案](mysqlfailover.md)
 * [proxysql](proxysql.md)
