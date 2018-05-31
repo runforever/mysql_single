@@ -1,0 +1,473 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>MySQL 监控 · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="account.html" />
+    
+    
+    <link rel="prev" href="monitor.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="SETUP.html">
+            
+                <a href="SETUP.html">
+            
+                    
+                    安装特定版本的 MySQL 并调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="migration.html">
+            
+                <a href="migration.html">
+            
+                    
+                    迁移 MySQL 数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="backup.html">
+            
+                <a href="backup.html">
+            
+                    
+                    备份 MySQL 数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="setup_slave.html">
+            
+                <a href="setup_slave.html">
+            
+                    
+                    搭建从库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="monitor.html">
+            
+                <a href="monitor.html">
+            
+                    
+                    监控
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7" data-path="mysql_monitor.html">
+            
+                <a href="mysql_monitor.html">
+            
+                    
+                    MySQL 监控
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="account.html">
+            
+                <a href="account.html">
+            
+                    
+                    账号管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="profile.html">
+            
+                <a href="profile.html">
+            
+                    
+                    运行过程调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="security.html">
+            
+                <a href="security.html">
+            
+                    
+                    安全设置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="tools.html">
+            
+                <a href="tools.html">
+            
+                    
+                    常用工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="binlog_migration.html">
+            
+                <a href="binlog_migration.html">
+            
+                    
+                    迁移 binlog 目录
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="mysqlfailover.html">
+            
+                <a href="mysqlfailover.html">
+            
+                    
+                    高可用方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="proxysql.html">
+            
+                <a href="proxysql.html">
+            
+                    
+                    proxysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >MySQL 监控</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="mysql&#x76D1;&#x63A7;&#x65B9;&#x6848;">mysql&#x76D1;&#x63A7;&#x65B9;&#x6848;</h1><h2 id="&#x9700;&#x6C42;&#x80CC;&#x666F;">&#x9700;&#x6C42;&#x80CC;&#x666F;</h2><p>&#x7531;&#x4E8E;mysql&#x8C03;&#x4F18;&#x7684;&#x9700;&#x8981;&#xFF0C;&#x5E0C;&#x671B;&#x4EE5;&#x66F4;&#x76F4;&#x89C2;&#x7684;&#x65B9;&#x5F0F;&#x6536;&#x96C6;&#x548C;&#x5C55;&#x793A;&#x6027;&#x80FD;&#x6307;&#x6807;&#xFF0C;&#x5E76;&#x652F;&#x6301;&#x6570;&#x636E;&#x81EA;&#x5B9A;&#x4E49;&#x548C;&#x8BBE;&#x7F6E;&#x62A5;&#x8B66;&#xFF0C;&#x4EE5;&#x4FBF;&#x4E8E;&#x5206;&#x6790;&#x548C;&#x5FEB;&#x901F;&#x5B9A;&#x4F4D;&#x95EE;&#x9898;&#xFF0C;&#x6545;&#x4EE5;&#x6B64;&#x4E3A;&#x524D;&#x63D0;&#x8003;&#x8651;&#x90E8;&#x7F72;&#x4E00;&#x5957;mysql&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;&#x3002;</p><h2 id="&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;&#x8C03;&#x7814;">&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;&#x8C03;&#x7814;</h2><p>&#x8FD0;&#x7EF4;&#x65B9;&#x9762;&#x6709;&#x642D;&#x5EFA;zabbix&#xFF0C;&#x5E76;&#x7531;Percona Monitoring Plugins&#x83B7;&#x53D6;&#x5230;mysql&#x90E8;&#x5206;&#x6307;&#x6807;&#x6570;&#x636E;&#xFF08;&#x636E;&#x53CD;&#x6620;&#x6570;&#x636E;&#x4E0D;&#x5168;&#xFF09;&#xFF0C;&#x4F46;&#x56FE;&#x5F62;&#x5C55;&#x793A;&#x4E0D;&#x53CB;&#x597D;&#x4E14;&#x7F51;&#x4E0A;&#x672A;&#x627E;&#x5230;&#x73B0;&#x6210;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF0C;&#x76EE;&#x6D4B;&#x5B66;&#x4E60;&#x6210;&#x672C;&#x8F83;&#x9AD8;&#xFF0C;&#x96BE;&#x4EE5;&#x4F4E;&#x6210;&#x672C;&#x8FBE;&#x5230;&#x7406;&#x60F3;&#x6548;&#x679C;&#x3002;&#x540C;&#x65F6;&#xFF0C;&#x56E2;&#x961F;&#x5DF2;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x57FA;&#x4E8E;grafana+graphite+statsD&#x7684;<a href="http://10.9.255.71:82" target="_blank">&#x76D1;&#x63A7;&#x670D;&#x52A1;</a>&#xFF0C;&#x90E8;&#x7F72;&#x65B9;&#x5F0F;&#x91C7;&#x7528;&#x73B0;&#x6210;&#x7684;&#x7B2C;&#x4E09;&#x65B9;<a href="https://github.com/kamon-io/docker-grafana-graphite" target="_blank">docker&#x955C;&#x50CF;</a>&#x3002;&#x8BE5;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;&#x57FA;&#x672C;&#x6EE1;&#x8DB3;&#x4E86;&#x5BF9;django REST web&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x7684;&#x8BBF;&#x95EE;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x548C;&#x5C55;&#x793A;&#xFF0C;&#x867D;&#x7136;&#x8FD8;&#x5B58;&#x5728;&#x4E00;&#x4E9B;&#x6027;&#x80FD;&#x95EE;&#x9898;&#xFF08;&#x89C1;x.x&#xFF09;&#xFF0C;&#x4F46;&#x7406;&#x8BBA;&#x4E0A;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x8FD9;&#x5957;&#x7CFB;&#x7EDF;&#x505A;&#x5230;mysql&#x76D1;&#x63A7;&#x3002;</p><h3 id="&#x65B9;&#x6848;a&#xFF1A;&#x57FA;&#x4E8E;&#x73B0;&#x6709;&#x7684;grafanagraphitestatsd&#x7CFB;&#x7EDF;">&#x65B9;&#x6848;A&#xFF1A;&#x57FA;&#x4E8E;&#x73B0;&#x6709;&#x7684;grafana+graphite+statsd&#x7CFB;&#x7EDF;</h3><ol><li><p>graphite&#x6E90;&#x7801;&#x4E3A;python&#xFF0C;&#x6570;&#x636E;&#x6536;&#x96C6;&#x5F00;&#x53D1;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x5BF9;&#x4E8E;&#x56E2;&#x961F;&#x7684;&#x6280;&#x672F;&#x6808;&#x6BD4;&#x8F83;&#x53CB;&#x597D;</p></li>
+<li><p>mysql &#x6570;&#x636E;&#x6536;&#x96C6;&#x53EF;&#x9009;&#x7528;&#x7B2C;&#x4E09;&#x65B9;<a href="https://github.com/db-art/mysql-statsd" target="_blank">mysql-statsd&#x5305;</a>&#xFF0C;&#x4F46;&#x6700;&#x65B0;&#x66F4;&#x65B0;&#x65F6;&#x95F4;&#x4E3A;&#x4E8C;&#x5E74;&#x524D;&#xFF0C;&#x4E14;&#x6587;&#x6863;&#x8BF4;&#x660E;&#x4EC5;&#x652F;&#x6301;mysql5.5&#xFF0C;&#x800C;&#x6211;&#x4EEC;&#x7684;mysql&#x4E3A;5.7</p></li>
+<li><p>grafana+graphite+statsd&#x7CFB;&#x7EDF;&#x5BF9;&#x786C;&#x4EF6;&#x5199;&#x5165;&#x6027;&#x80FD;&#x8981;&#x6C42;&#x8F83;&#x9AD8;&#xFF08;&#x4E14;iops&#x968F;&#x7740;retention&#x7684;&#x8C03;&#x6574;&#x589E;&#x9AD8;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;10s:7d&#xFF0C;&#x6539;&#x4E3A;10s:1d, 1m:30d&#x540E;&#x4E5F;&#x4F1A;&#x589E;&#x957F;&#xFF0C;&#x76EE;&#x524D;&#x539F;&#x56E0;&#x4E0D;&#x660E;&#xFF0C;&#x731C;&#x6D4B;iops&#x540C;&#x65F6;&#x53D7;&#x5230;&#x91C7;&#x6837;&#x95F4;&#x9699;&#xFF0C;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x5927;&#x5C0F;&#x548C;&#x91C7;&#x6837;&#x95F4;&#x9699;&#x9636;&#x68AF;&#x6570;&#x76EE;&#x7684;&#x5F71;&#x54CD;&#xFF09;</p></li>
+<li><p>grafana+graphite+statsd&#x65B9;&#x6848;&#x6BD4;&#x8F83;&#x53E4;&#x8001;&#xFF0C;&#x4E14;&#x4F18;&#x52BF;&#x5728;&#x4E8E;&#x6C34;&#x5E73;&#x6269;&#x5C55;&#x65B9;&#x6848;&#x548C;&#x5386;&#x53F2;&#x6570;&#x636E;&#x7559;&#x5B58;&#x5468;&#x671F;&#xFF0C;&#x5BF9;&#x4E8E;&#x6211;&#x4EEC;&#x6765;&#x8BF4;&#x6CA1;&#x6709;&#x660E;&#x663E;&#x7684;&#x5438;&#x5F15;&#x529B;&#xFF08;&#x53C2;&#x8003;&#x89C1;&#x5E95;&#x90E8;&#xFF09;</p></li>
+<li><p>&#x7B2C;&#x4E09;&#x65B9;dashboard&#x4E5F;&#x5F88;&#x53E4;&#x8001;&#x548C;&#x7B80;&#x964B;&#xFF0C;&#x4F8B;&#x5982;<a href="https://grafana.com/dashboards/235" target="_blank">Grafana dashboards for measuring MySQL performance with Graphite</a></p><p>&#x200B;</p></li></ol>
+<h3 id="&#x65B9;&#x6848;b&#xFF1A;&#x642D;&#x5EFA;&#x65B0;&#x7684;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;">&#x65B9;&#x6848;B&#xFF1A;&#x642D;&#x5EFA;&#x65B0;&#x7684;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;</h3><ol><li>&#x53C2;&#x8003;&#x65B9;&#x6848;&#xFF1A;Prometheus&#xFF0C;InfluxDB&#xFF0C;OpenTSDB&#xFF0C;PMM&#xFF08;Percona Monitoring and Management&#xFF09;
+</li>
+<li>Prometheus VS InfluxDB VS OpenTSDB&#xFF1A;&#x76EE;&#x6D4B;prometheus&#x6700;&#x65B0;&#xFF0C;&#x4E00;&#x7AD9;&#x5F0F;&#x5E73;&#x53F0;&#x529F;&#x80FD;&#x5B8C;&#x5907;&#xFF0C;&#x4E14;&#x6587;&#x6863;&#x4E30;&#x5BCC;&#x65B0;&#x9C9C;&#xFF08;&#x53C2;&#x8003;&#x89C1;&#x5E95;&#x90E8;&#xFF09;&#xFF1B;
+</li>
+<li><a href="https://www.percona.com/doc/percona-monitoring-and-management/architecture.html" target="_blank">PMM&#xFF08;Percona Monitoring and Management&#xFF09;</a>&#x7531;prometheus&#x548C;QAN system&#x7EC4;&#x6210;&#xFF0C;QAN&#xFF08;Query Analytics&#xFF09;&#x7528;&#x4E8E;&#x6536;&#x96C6;&#x548C;&#x5206;&#x6790;mysql&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x6027;&#x80FD;Metrics&#xFF0C;&#x7ECF;&#x8BC4;&#x4F30;&#x5BF9;&#x6211;&#x4EEC;&#x5F53;&#x524D;mysql&#x8C03;&#x4F18;&#x5E2E;&#x52A9;&#x975E;&#x5FC5;&#x9700;&#xFF0C;&#x6545;&#x7565;&#x8FC7;&#x3002;
+</li>
+<li>&#x90BB;&#x8FD1;&#x56E2;&#x961F;&#x6709;&#x5728;&#x5F00;&#x59CB;&#x4F7F;&#x7528;prometheus&#x90E8;&#x5206;&#x529F;&#x80FD;&#xFF0C;&#x76EE;&#x6D4B;&#x987A;&#x7545;&#xFF1B;
+</li>
+<li>&#x7531;&#x4E8E;&#x6BD4;&#x8F83;&#x719F;&#x6089;&#x4E14;&#x4F7F;&#x7528;&#x611F;&#x826F;&#x597D;&#x7EE7;&#x7EED;&#x6CBF;&#x7528;grafana&#xFF0C;&#x5B8C;&#x6574;&#x65B9;&#x6848;&#x4E3A;grafana+prometheus&#xFF1B;
+</li>
+<li>&#x8C03;&#x7814;&#x662F;&#x5426;&#x5B58;&#x5728;&#x73B0;&#x6210;&#x7684;&#x6027;&#x80FD;&#x8C03;&#x4F18;&#x53C2;&#x8003;&#x56FE;&#x6807;&#xFF0C;&#x76EE;&#x524D;&#x6700;&#x5168;&#x7684;&#x8FD8;&#x662F;<a href="https://github.com/percona/grafana-dashboards" target="_blank">Grafana dashboards for MySQL and MongoDB monitoring using Prometheus</a>&#xFF0C;&#x4F46;&#x662F;&#x90FD;&#x6CA1;&#x6709;&#x660E;&#x786E;&#x7684;&#x6027;&#x80FD;&#x6307;&#x6807;&#x5EFA;&#x8BAE;&#xFF0C;&#x4F46;&#x4F3C;&#x4E4E;&#x652F;&#x6301;&#x81EA;&#x5B9A;&#x4E49;<a href="https://github.com/grafana/grafana/issues/9084" target="_blank">&#x9608;&#x503C;&#x7EBF;</a>
+</li></ol>
+<h2 id="grafanaprometheus&#x642D;&#x5EFA;">grafana+prometheus&#x642D;&#x5EFA;</h2><p>&#x53EF;&#x9009;&#x62E9;&#x7B2C;&#x4E09;&#x65B9;&#x96C6;&#x6210;&#x7684;<a href="https://github.com/vegasbrianc/prometheus" target="_blank">docker&#x955C;&#x50CF;</a>&#xFF0C;&#x4F46;&#x4ECE;&#x957F;&#x8FDC;&#x8003;&#x8651;&#x4E3A;&#x4E86;&#x719F;&#x6089;&#x7CFB;&#x7EDF;&#x9009;&#x62E9;&#x4E86;&#x4ECE;&#x96F6;&#x5F00;&#x59CB;&#x642D;&#x5EFA;&#x3002;</p><h3 id="&#x521B;&#x5EFA;&#x65B0;&#x9879;&#x76EE;">&#x521B;&#x5EFA;&#x65B0;&#x9879;&#x76EE;</h3><pre><code>mkdir /opt/grafana-prometheus
+cd /opt/grafana-prometheus</code></pre>
+<h3 id="&#x914D;&#x7F6E;docker-composeyml">&#x914D;&#x7F6E;docker-compose.yml</h3><p>images&#xFF1A;<a href="https://hub.docker.com/r/prom/prometheus/" target="_blank">prometheus</a> &amp; <a href="https://hub.docker.com/r/grafana/grafana/" target="_blank">grafana</a></p><p>docker-compose.yml demo&#xFF1A;</p><pre><code>version: &apos;3&apos;
+services:
+  prometheus:
+    image: prom/prometheus:v2.2.1
+    container_name: prom-prometheus
+    volumes:
+      - ./prometheus/data:/data
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - &apos;--config.file=/etc/prometheus/prometheus.yml&apos;
+    ports:
+      - &apos;9090:9090&apos;
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-grafana
+    environment:
+        - GF_SECURITY_ADMIN_PASSWORD=${admin_pass}
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+    depends_on:
+      - prometheus
+    ports:
+      - &apos;3000:3000&apos;</code></pre>
+<h3 id="&#x914D;&#x7F6E;prometheus&#x51C6;&#x5907;">&#x914D;&#x7F6E;prometheus&#x51C6;&#x5907;</h3><p>prometheus/prometheus.yml &#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</p><pre><code>global:
+  scrape_interval: 5s
+  external_labels:
+    monitor: &apos;default-monitor&apos;
+
+scrape_configs:
+  - job_name: &apos;prometheus&apos;
+    static_configs:
+      - targets: [&apos;localhost:9090&apos;]</code></pre>
+<p>&#x540E;&#x7EED;&#x65B0;&#x589E;exporter&#x540E;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x8BE5;&#x914D;&#x7F6E;&#x3002;</p><h3 id="&#x914D;&#x7F6E;grafana">&#x914D;&#x7F6E;grafana</h3><p>&#x542F;&#x52A8;grafana&#x548C;prometheus&#x670D;&#x52A1;&#xFF1A;</p><pre><code>docker-compose up -d</code></pre>
+<p>&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE;&#xFF1A;<a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p><p>&#x767B;&#x9646;&#x7528;&#x6237;&#xFF1A;admin/${GF_SECURITY_ADMIN_PASSWORD}&#xFF0C;&#x82E5;&#x672A;&#x7279;&#x522B;&#x5B9A;&#x4E49;GF_SECURITY_ADMIN_PASSWORD&#x9ED8;&#x8BA4;&#x4E3A;admin</p><p>&#x914D;&#x7F6E;&#x6570;&#x636E;&#x6E90;&#xFF1A;<a href="http://localhost:3000/datasources" target="_blank">http://localhost:3000/datasources</a></p><p>&#x200B;    &#x5176;&#x4E2D;Type&#x9009;&#x62E9;Prometheus&#xFF0C;URL&#x7531;&#x4E8E;docker-compose.yml&#x914D;&#x7F6E;&#x8FC7;depends_on&#x53EF;&#x586B;&#x5199;sevice name&#x3002;</p><p>&#x200B;    <img alt="image-20180524110122458" src="var/folders/pp/sbc9hlss70bc4h_xl8xg0nz40000gn/T/abnerworks.Typora/image-20180524110122458.png"></p><p>&#x5BFC;&#x5165;dashboards&#xFF1A;<a href="http://localhost:3000/dashboard/import" target="_blank">http://localhost:3000/dashboard/import</a></p><p>&#x200B;    &#x53EF;&#x901A;&#x8FC7;&#x5B98;&#x65B9;grafana.com&#x63D0;&#x4F9B;&#x7684;<a href="https://grafana.com/dashboards?dataSource=prometheus" target="_blank">dashboard&#x6A21;&#x677F;</a>&#x7684;url&#x6216;id&#xFF0C;&#x6216;&#x4E0A;&#x4F20;json&#x6587;&#x4EF6;&#x7684;&#x65B9;&#x5F0F;&#x5BFC;&#x5165;dashboard&#x3002;&#x4E5F;&#x53EF;&#x91C7;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x63D0;&#x4F9B;&#x7684;dashboard&#xFF0C;&#x4F8B;&#x5982;percona&#x7684;<a href="https://github.com/percona/grafana-dashboards" target="_blank">Grafana dashboards for MySQL and MongoDB monitoring using Prometheus</a>&#x3002;</p><p>&#x200B;    &#x3010;&#x6CE8;&#x610F;&#x3011;percona&#x63D0;&#x4F9B;&#x7684;Install dashboards&#x65B9;&#x6CD5;&#xFF0C;&#x4EB2;&#x6D4B;&#x65E0;&#x6CD5;&#x751F;&#x6548;&#xFF0C;&#x539F;&#x56E0;&#x4E0D;&#x660E;&#x3002;grafana&#x5B98;&#x65B9;&#x4E5F;&#x6CA1;&#x6709;&#x63D0;&#x4F9B;&#x7C7B;&#x4F3C;&#x7684;&#x6279;&#x91CF;&#x5BFC;&#x5165;&#x65B9;&#x6848;&#xFF0C;&#x6545;&#x4F9D;&#x7167;&#x5B98;&#x65B9;&#x624B;&#x518C;&#x4E00;&#x4E2A;&#x4E2A;&#x624B;&#x52A8;&#x5BFC;&#x5165;&#x7684;json&#x6587;&#x4EF6;&#x3002;</p><h3 id="&#x5B89;&#x88C5;&#x548C;&#x914D;&#x7F6E;exporter">&#x5B89;&#x88C5;&#x548C;&#x914D;&#x7F6E;Exporter</h3><h4 id="mysqlexporter">mysql_exporter</h4><p>&#x5B89;&#x88C5;&#xFF1A;</p><p>&#x200B;    <a href="https://hub.docker.com/r/prom/mysqld-exporter/" target="_blank">docker image&#x65B9;&#x5F0F;</a></p><p>&#x200B;    <a href="https://github.com/prometheus/mysqld_exporter/releases" target="_blank">&#x4E8C;&#x8FDB;&#x5236;&#x5305;&#x65B9;&#x5F0F;</a></p><p>&#x200B;    <a href="https://github.com/prometheus/mysqld_exporter" target="_blank">github&#x6E90;&#x7801;&#x65B9;&#x5F0F;</a></p><p>&#x200B;    &#x7531;&#x4E8E;mysql&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x7ECF;&#x8FC7;&#x8C03;&#x4F18;cpu&#x6A21;&#x5F0F;&#x4E0D;&#x652F;&#x6301;docker&#x670D;&#x52A1;&#xFF0C;&#x6545;&#x672A;&#x91C7;&#x7528;docker&#x65B9;&#x5F0F;&#x3002;&#x800C;&#x975E;docker&#x65B9;&#x5F0F;&#x4F9D;&#x8D56;golang&#x73AF;&#x5883;&#xFF0C;&#x5B89;&#x88C5;&#x53C2;&#x8003;<a href="https://golang.org/doc/install" target="_blank">golang install</a>&#x3002;</p><p>&#x200B;    &#x82E5;&#x91C7;&#x7528;&#x4E8C;&#x8FDB;&#x5236;&#x5305;&#x65B9;&#x5F0F;&#xFF0C;&#x4E0B;&#x8F7D;&#x89E3;&#x538B;&#x5373;&#x53EF;&#x3002;&#x82E5;&#x91C7;&#x7528;&#x6E90;&#x7801;&#x751F;&#x4EA7;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x5219;&#x8F83;&#x9EBB;&#x70E6;&#xFF1A;</p><p>&#x200B;        git clone ${remote_repo}</p><p>&#x200B;        make</p><p>&#x200B;            golang&#x5B98;&#x65B9;&#x6B65;&#x9AA4;&#x4E3A;&#x76F4;&#x63A5;make&#xFF0C;&#x4F46;&#x662F;&#x6839;&#x636E;Makefile*&#x6765;&#x770B;&#x5B83;&#x53EA;&#x4F1A;&#x8FDB;&#x884C;&#x8BED;&#x6CD5;&#x68C0;&#x6D4B;&#xFF0C;&#x5E76;&#x4E0D;&#x4F1A;&#x4E0B;&#x8F7D;&#x4F9D;&#x8D56;&#x5305;&#xFF08;&#x61F5;&#x903C;&#xFF09;&#xFF0C;&#x6545;&#x6309;&#x7167;&#x5982;&#x4E0B;&#x6D41;&#x7A0B;&#x8FDB;&#x884C;&#x7684;&#x5B89;&#x88C5;&#xFF1A;</p><p>&#x200B;                &#x4E0B;&#x8F7D;&#x4F9D;&#x8D56;&#xFF1A;go get -d ./...</p><p>&#x200B;                &#x4E0B;&#x8F7D;&#x6D4B;&#x8BD5;&#x4F9D;&#x8D56;&#xFF1A;go get -t ./&#x2026;</p><p>&#x200B;                &#x4E07;&#x6076;&#x7684;GFW&#x9020;&#x6210;&#x90E8;&#x5206;&#x5305;&#x65E0;&#x6CD5;&#x987A;&#x5229;&#x4E0B;&#x8F7D;&#xFF0C;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x76F8;&#x5E94;&#x5305;&#x7684;github&#x5730;&#x5740;&#x5E76;&#x4E0B;&#x8F7D;</p><p>&#x200B;                &#x82E5;go vet ./&#x2026;&#x901A;&#x8FC7;&#xFF0C;&#x5219;&#x6267;&#x884C;make&#xFF0C;&#x5426;&#x5219;&#x5904;&#x7406;&#x9519;&#x8BEF;&#x76F4;&#x81F3;&#x901A;&#x8FC7;</p><p>&#x200B;                &#x82E5;make&#x8FDB;&#x884C;&#x5230;staticcheck&#x6B65;&#x9AA4;&#x62A5;&#x9519;SA1019&#xFF08;&#x63A8;&#x6D4B;&#x539F;&#x56E0;&#x4E3A;mysql exporter&#x7684;&#x67D0;&#x884C;&#x4EE3;&#x7801;&#x8BED;&#x6CD5;&#x8FC7;&#x65F6;&#xFF0C;&#x5B98;&#x65B9;&#x5EFA;&#x8BAE;&#x66F4;&#x65B0;&#xFF0C;&#x4F46;makefile&#x4E2D;&#x6709;&#x6307;&#x660E;&#x5FFD;&#x7565;&#x8FD9;&#x4E2A;&#x9519;&#x8BEF;&#xFF0C;&#x4E0D;&#x660E;&#x767D;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD8;&#x4F1A;&#x63D0;&#x793A;&#xFF09;&#xFF0C;&#x53EF;&#x5230;Makefile*&#x4E2D;&#x53BB;&#x6389;staticcheck&#x7EE7;&#x7EED;&#x8FDB;&#x884C;</p><p>&#x914D;&#x7F6E;&#xFF1A;</p><p>&#x200B;    mysql&#x521B;&#x5EFA;&#x4E13;&#x7528;&#x76D1;&#x63A7;&#x8D26;&#x53F7;&#xFF1A;</p><pre><code>mysql&gt; CREATE USER &apos;exporter&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;XXXXXXXX&apos; WITH MAX_USER_CONNECTIONS 3;
+mysql&gt; GRANT PROCESS, REPLICATION CLIENT, SELECT ON . TO &apos;exporter&apos;@&apos;localhost&apos;;</code></pre>
+<p>&#x200B;    &#x914D;&#x7F6E;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF1A;</p><p>&#x200B;        tcp&#x65B9;&#x5F0F;&#xFF1A;</p><p>&#x200B;            export DATA_SOURCE_NAME=&apos;exporter:XXXXXXXX@tcp(localhost:3306)/${db_name}&apos;</p><p>&#x200B;        Unix domain sockets&#x65B9;&#x5F0F;&#xFF1A;</p><p>&#x200B;            export DATA_SOURCE_NAME=&apos;exporter:XXXXXXXX@unix(XXX/mysqld.sock)/&apos;</p><p>&#x200B;        &#x751F;&#x4EA7;&#x73AF;&#x5883;&#x5B9E;&#x6D4B;&#x65E0;&#x6CD5;&#x4EE5;tcp&#x7684;&#x65B9;&#x5F0F;&#x8BBF;&#x95EE;localhost&#xFF0C;&#x63A8;&#x6D4B;&#x539F;&#x56E0;&#x4E3A;tcp&#x65B9;&#x5F0F;&#x9700;&#x8981;&#x5C06;localhost&#x89E3;&#x6790;&#x6210;127.0.0.1&#xFF0C;&#x800C;&#x6211;&#x4EEC;&#x7684;mysql&#x7981;&#x7528;&#x4E86;dns&#x89E3;&#x6790;&#xFF08;skip-name-resolve = ON&#xFF09;&#x3002;</p><p>&#x542F;&#x52A8;&#xFF1A;./mysqld_exporter <flags></flags></p><p>&#x200B;    &#x5BFC;&#x5165;&#x7684;dashboard&#x53EF;&#x80FD;&#x9700;&#x8981;&#x4E00;&#x4E9B;mysqld_exporter&#x7684;&#x975E;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x65F6;&#x9700;&#x8981;&#x5728;&#x542F;&#x52A8;&#x65F6;&#x914D;&#x7F6E;flags&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;./mysqld_exporter &#x2014;collect.binlog_size&#xFF08;&#x53C2;&#x8003; <a href="https://github.com/prometheus/mysqld_exporter" target="_blank">https://github.com/prometheus/mysqld_exporter</a> &#x7684;Collector Flags&#xFF09;</p><h4 id="nodeexporter">node_exporter</h4><p>&#x5B89;&#x88C5;&#xFF1A;</p><p>&#x200B;    &#x9009;&#x62E9;&#x76F8;&#x5E94;&#x7248;&#x672C;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x5305;&#xFF1A;<a href="https://github.com/prometheus/node_exporter/releases" target="_blank">https://github.com/prometheus/node_exporter/releases</a></p><p>&#x200B;    tar -xzf node_exporter-0.16.0.linux-amd64.tar.gz</p><p>&#x200B;    cd node_exporter-0.16.0.linux-amd64/</p><p>&#x542F;&#x52A8;&#xFF1A;./node_exporter</p><p>&#x3010;&#x6CE8;&#x610F;&#x3011;&#x6700;&#x65B0;&#x7684;node_exporter0.16.0&#xFF0C;&#x5BF9;Metric name&#x6307;&#x6807;&#x540D;&#x5B9A;&#x4E49;&#x505A;&#x4E86;&#x5927;&#x8303;&#x56F4;&#x66F4;&#x65B0;&#xFF0C;&#x76EE;&#x524D;&#x6CA1;&#x6709;&#x76F8;&#x914D;&#x5957;&#x7684;dashboards&#xFF0C;&#x9700;&#x8981;&#x81EA;&#x884C;&#x66FF;&#x6362;&#x66F4;&#x65B0;&#xFF08;&#x53C2;&#x8003; <a href="https://github.com/prometheus/node_exporter/issues/830" target="_blank">https://github.com/prometheus/node_exporter/issues/830</a> &#xFF09;&#x3002;&#x5982;&#x679C;&#x5ACC;&#x9EBB;&#x70E6;&#x4E14;&#x4E0D;&#x4ECB;&#x610F;&#x6307;&#x6807;&#x6570;&#x636E;&#x51FA;&#x73B0;&#x5B9A;&#x4E49;&#x65AD;&#x5C42;&#xFF0C;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4E0B;&#x8F7D;&#x4E0A;&#x4E2A;&#x7248;&#x672C;0.15.0&#xFF0C;&#x5E76;&#x7B49;&#x5F85;&#x9700;&#x8981;&#x7684;&#x7B2C;&#x4E09;&#x65B9;dashboards&#x63D0;&#x4F9B;&#x517C;&#x5BB9;&#x7248;&#x672C;&#x540E;&#x518D;&#x4E00;&#x8D77;&#x66F4;&#x65B0;&#x3002;</p><h2 id="&#x914D;&#x7F6E;prometheus">&#x914D;&#x7F6E;prometheus</h2><p>&#x786E;&#x8BA4;&#x6570;&#x636E;&#x91C7;&#x96C6;&#x6E90;exporter&#x540E;&#x53EF;&#x5728;scrape_configs&#x4E0B;&#x65B0;&#x589E;job&#xFF0C;&#x4F8B;&#x5982;&#x914D;&#x7F6E;mysql&#x6307;&#x6807;&#x548C;myql&#x670D;&#x52A1;&#x5668;&#x6307;&#x6807;&#x540E;&#x5982;&#x4E0B;&#xFF1A;</p><pre><code>global:
+  scrape_interval: 5s
+  external_labels:
+    monitor: &apos;default-monitor&apos;
+
+scrape_configs:
+  - job_name: &apos;prometheus&apos;
+    static_configs:
+      - targets: [&apos;localhost:9090&apos;]
+
+  - job_name: &apos;mysql&apos;
+    scrape_interval: 10s
+    static_configs:
+      - targets: [&apos;${node_a}:9104&apos;, &apos;${node_a}:9104&apos;]
+
+  - job_name: &apos;node&apos;
+    scrape_interval: 10s
+    static_configs:
+      - targets: [&apos;${node_b}:9104&apos;, &apos;${node_b}:9104&apos;]</code></pre>
+<h2 id="&#x95EE;&#x9898;">&#x95EE;&#x9898;</h2><p>&#x6765;&#x81EA;&#x540C;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4F46;&#x4E0D;&#x540C;instance&#xFF08;&#x4E5F;&#x5C31;&#x662F;ip&#x76F8;&#x540C;&#xFF0C;exporter&#x7AEF;&#x53E3;&#x4E0D;&#x540C;&#xFF09;&#x7684;Metrics&#x7684;&#x56FE;&#x8868;&#x914D;&#x7F6E;&#x8FD8;&#x5B58;&#x5728;&#x95EE;&#x9898;&#xFF0C;&#x4F8B;&#x5982;dashboard &quot;MySQL Overview&quot;&#x7684;&quot; I/O Activity&quot;&#x56FE;&#x8868;&#x3002;</p><h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2><p>&#x200B;    <a href="http://liubin.org/blog/2016/02/25/tsdb-list-part-1/" target="_blank">&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x5E93;&#x6BD4;&#x8F83;</a></p><p>&#x200B;    <a href="https://prometheus.io/docs/introduction/comparison/" target="_blank">Prometheus VS &#x5176;&#x5B83;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;</a></p><p>&#x200B;    <a href="https://prometheus.io/docs/prometheus/latest/getting_started/" target="_blank">Prometheus Getting Started</a></p><p>&#x200B;    <a href="https://www.percona.com/blog/2016/02/29/graphing-mysql-performance-with-prometheus-and-grafana/" target="_blank">Graphing MySQL performance with Prometheus and Grafana</a></p><p>&#x200B;    <a href="https://prometheus.io/download/" target="_blank">Prometheus Related Download</a></p>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="monitor.html" class="navigation navigation-prev " aria-label="Previous page: 监控">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="account.html" class="navigation navigation-next " aria-label="Next page: 账号管理">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"MySQL 监控","level":"1.7","depth":1,"next":{"title":"账号管理","level":"1.8","depth":1,"path":"account.md","ref":"account.md","articles":[]},"previous":{"title":"监控","level":"1.6","depth":1,"path":"monitor.md","ref":"monitor.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"mysql_monitor.md","mtime":"2018-05-29T03:57:33.993Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-31T07:45:48.334Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,410 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>备份 MySQL 数据 · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="setup_slave.html" />
+    
+    
+    <link rel="prev" href="migration.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="SETUP.html">
+            
+                <a href="SETUP.html">
+            
+                    
+                    安装特定版本的 MySQL 并调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="migration.html">
+            
+                <a href="migration.html">
+            
+                    
+                    迁移 MySQL 数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="backup.html">
+            
+                <a href="backup.html">
+            
+                    
+                    备份 MySQL 数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="setup_slave.html">
+            
+                <a href="setup_slave.html">
+            
+                    
+                    搭建从库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="monitor.html">
+            
+                <a href="monitor.html">
+            
+                    
+                    监控
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="mysql_monitor.html">
+            
+                <a href="mysql_monitor.html">
+            
+                    
+                    MySQL 监控
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="account.html">
+            
+                <a href="account.html">
+            
+                    
+                    账号管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="profile.html">
+            
+                <a href="profile.html">
+            
+                    
+                    运行过程调优
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="security.html">
+            
+                <a href="security.html">
+            
+                    
+                    安全设置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" data-path="tools.html">
+            
+                <a href="tools.html">
+            
+                    
+                    常用工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" data-path="binlog_migration.html">
+            
+                <a href="binlog_migration.html">
+            
+                    
+                    迁移 binlog 目录
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" data-path="mysqlfailover.html">
+            
+                <a href="mysqlfailover.html">
+            
+                    
+                    高可用方案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" data-path="proxysql.html">
+            
+                <a href="proxysql.html">
+            
+                    
+                    proxysql
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >备份 MySQL 数据</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x5907;&#x4EFD;&#x65B9;&#x6848;">&#x5907;&#x4EFD;&#x65B9;&#x6848;</h1><h2 id="&#x65B9;&#x6848;&#x8FF7;&#x601D;">&#x65B9;&#x6848;&#x8FF7;&#x601D;</h2><ol><li>&#x4F7F;&#x7528; mysqldump&#x3002;
+</li>
+<li>&#x4F7F;&#x7528; xtrabackup&#x3002;
+</li>
+<li>&#x4F7F;&#x7528; mydumper&#x3002;
+</li>
+<li>&#x642D;&#x5EFA;&#x4ECE;&#x5E93;&#x5E76;&#x4E14;&#x8BBE;&#x7F6E;&#x5EF6;&#x65F6; 3 &#x4E2A;&#x5C0F;&#x65F6;&#x540C;&#x6B65;&#x4E3B;&#x5E93;&#x3002;
+</li></ol>
+<h2 id="&#x80CC;&#x666F;">&#x80CC;&#x666F;</h2><p>&#x6570;&#x636E;&#x5E93;&#x6587;&#x4EF6;&#x6709; 113G&#xFF0C;&#x505A;&#x8868; migrate &#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x5148;&#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x8981;&#x6C42;&#x5C3D;&#x5FEB;&#x5907;&#x4EFD;&#x5B8C;&#x6210;&#x3002;</p><h2 id="mysqldump">mysqldump</h2><p>mysqldump &#x9002;&#x5408;&#x6570;&#x636E;&#x91CF;&#x6BD4;&#x8F83;&#x5C0F;&#x7684;&#x65F6;&#x5019;&#x4F7F;&#x7528;&#xFF0C;&#x4F1A;&#x9501;&#x8868;&#xFF0C;pass&#x3002;</p><h2 id="mydumper">mydumper</h2><p>&#x4E0D;&#x7965;</p><h2 id="&#x642D;&#x5EFA;&#x4ECE;&#x5E93;&#x5907;&#x4EFD;">&#x642D;&#x5EFA;&#x4ECE;&#x5E93;&#x5907;&#x4EFD;</h2><p>&#x642D;&#x5EFA;&#x65F6;&#x95F4;&#x8F83;&#x957F;&#xFF0C;&#x8003;&#x8651;&#x4EE5;&#x540E;&#x505A;&#x3002;</p><h2 id="xtrabackup">xtrabackup</h2><p>&#x652F;&#x6301;&#x70ED;&#x5907;&#x4EFD;&#xFF0C;&#x4E0D;&#x9501;&#x8868;&#xFF0C;&#x652F;&#x6301;&#x589E;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x5C31;&#x5B83;&#x4E86;&#x3002;</p><h3 id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</h3><p>&#x6839;&#x636E; <a href="https://www.percona.com/doc/percona-xtrabackup/LATEST/installation.html" target="_blank">&#x5B89;&#x88C5;&#x6587;&#x6863;</a> &#x5C06;&#x5DE5;&#x5177;&#x5B89;&#x88C5;&#x597D;&#x3002;</p><h3 id="&#x5168;&#x91CF;&#x5907;&#x4EFD;">&#x5168;&#x91CF;&#x5907;&#x4EFD;</h3><p>&#x6267;&#x884C;&#x4E00;&#x6B21;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x5907;&#x4EFD;&#x538B;&#x7F29;</p><pre><code>xtrabackup --user=youruser --password=yourpassword --backup --compress --compress-threads=6 --target-dir=/backup/compressd/1</code></pre>
+<h3 id="&#x6062;&#x590D;&#x5907;&#x4EFD;">&#x6062;&#x590D;&#x5907;&#x4EFD;</h3><p>&#x89E3;&#x538B;</p><pre><code>xtrabackup --user=youruser --password=yourpassword --parallel=6 --decompress --target-dir=/backup/compressd/1</code></pre>
+<h3 id="&#x51C6;&#x5907;&#x5907;&#x4EFD;">&#x51C6;&#x5907;&#x5907;&#x4EFD;</h3><pre><code>xtrabackup --user=youruser --password=yourpassword --prepare --target-dir=/backup/compressd/1</code></pre>
+<h3 id="&#x6062;&#x590D;&#x5907;&#x4EFD;">&#x6062;&#x590D;&#x5907;&#x4EFD;</h3><pre><code>xtrabackup --user=youruser --password=yourpassword --copy-back --target-dir=/backup/compressd/1</code></pre>
+<h2 id="&#x5F53;&#x524D;&#x73AF;&#x5883;&#x7684;&#x65B9;&#x6848;&#x9009;&#x62E9;">&#x5F53;&#x524D;&#x73AF;&#x5883;&#x7684;&#x65B9;&#x6848;&#x9009;&#x62E9;</h2><p>&#x5168;&#x91CF;&#x5907;&#x4EFD; 5 &#x5206;&#x949F;&#x5DE6;&#x53F3;&#xFF0C;&#x65F6;&#x95F4;&#x53EF;&#x4EE5;&#x63A5;&#x53D7;&#xFF0C;&#x6682;&#x65F6;&#x4E0D;&#x8003;&#x8651;&#x5F15;&#x5165;&#x589E;&#x91CF;&#x5907;&#x4EFD;&#x6765;&#x63D0;&#x9AD8;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x5C06;&#x5907;&#x4EFD;&#x547D;&#x4EE4;&#x5199;&#x6210;&#x811A;&#x672C;&#xFF0C;&#x6BCF;&#x5929;&#x51CC;&#x6668;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x5168;&#x91CF;&#x5907;&#x4EFD;&#xFF0C;&#x5907;&#x4EFD;&#x4FDD;&#x7559;&#x65F6;&#x95F4;&#x4E3A; 14 &#x5929;&#x3002;</p><h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2><p><a href="https://www.percona.com/doc/percona-xtrabackup/LATEST/index.html" target="_blank">Percona XtraBackup - Documentation</a></p>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="migration.html" class="navigation navigation-prev " aria-label="Previous page: 迁移 MySQL 数据">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="setup_slave.html" class="navigation navigation-next " aria-label="Next page: 搭建从库">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"备份 MySQL 数据","level":"1.4","depth":1,"next":{"title":"搭建从库","level":"1.5","depth":1,"path":"setup_slave.md","ref":"setup_slave.md","articles":[]},"previous":{"title":"迁移 MySQL 数据","level":"1.3","depth":1,"path":"migration.md","ref":"migration.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"backup.md","mtime":"2018-05-10T10:07:09.981Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-05-31T07:45:48.334Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
