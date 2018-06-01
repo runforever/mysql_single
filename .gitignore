@@ -1,1 +1,3 @@
 _book
+node_modules
+.deploy_book
