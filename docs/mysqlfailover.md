@@ -7,7 +7,11 @@ Google 一搜，MySQL 的高可用方案有 5 种之多，我们需要结合自�
 
 ## MySQL双主模式
 
-生产环境的双主模式搭建，整个过程中MySQL服务持续未中断。
+可应用于生产环境的双主模式搭建，整个过程中MySQL服务持续无须中断。
+
+#### 原理
+
+​	双节点相互复制，互为主库Master，理论上两个节点都支持写入，但是需要为潜在的数据冲突做配置。为了降低复杂性，我们采用了同时仅允许一个节点写入的模式。
 
 #### 前提
 
@@ -60,18 +64,166 @@ Google 一搜，MySQL 的高可用方案有 5 种之多，我们需要结合自�
    start slave;
    ```
 
-完成后可查看下A的slave状态：
+5. 完成后可查看下A的slave状态：
+
+   ```
+   show slave status\G
+   ```
+
+
+
+## keepalived搭配
+
+#### 原理
+
+​	[keepalived和vrrp协议](https://liangshuang.name/2017/11/16/keepalived/)
+
+#### [安装](http://www.keepalived.org/doc/installing_keepalived.html)
+
+#### 配置
+
+1. 配置/etc/keepalived/keepalived.conf
+
+   其中vip表示虚拟IP，rip表示真实IP，其它参数意义可参考[官方](http://www.keepalived.org/doc/configuration_synopsis.html)
+
+   ```
+   global_defs {
+      router_id mysqld-node1
+   }
+
+   vrrp_instance VI_1 {
+       state BACKUP
+       interface ens160
+       virtual_router_id 51
+       priority 100
+       advert_int 1
+       nopreempt
+       authentication {
+           auth_type PASS
+           auth_pass 12344321
+       }
+       virtual_ipaddress {
+           vip
+       }
+   }
+
+   virtual_server vip 3306 {
+       delay_loop 2
+       lb_algo rr
+       lb_kind NAT
+       persistence_timeout 50
+       protocol TCP
+
+       real_server rip 3306 {
+           weight 1
+       notify_down /etc/keepalived/mysql.sh
+       TCP_CHECK{
+               connect_timeout 3
+               retry 3
+               delay_before_retry 3
+               connect_port 3306
+           }
+       }
+   }
+   ```
+
+   为了实现故障自动转移，所以节点都需要设置为BACKUP。若需要默认设置某节点为主节点，可将其priority设置高于其它节点，这样在所有节点启动时会自动选出优先级最高的节点作为主节点。
+
+   但考虑到故障节点恢复后的数据时差和可能存在的冲突，我们希望它不会由于优先级更高而被自动推举为主节点，因此设置nopreempt允许低优先级节点作为主节点。这种情况下，如果希望手动恢复故障节点为主节点，可将nopreempt暂时去掉，若其优先级更高则会自动接管为主节点。之后再加上nopreempt，并reload。
+
+2. keepalived自杀脚本：/etc/keepalived/mysql.sh
+
+   ```
+   #!/bin/bash
+   pkill keepalived
+   ```
+
+#### 调试
+
+1. 守护进程启动：
+
+   ```
+   keepalived
+   ```
+
+		keepalived默认配置可参考[官网](http://www.keepalived.org/doc/programs_synopsis.html)。若需要打印具体的配置信息和错误，可加上参数-d（Dump the configuration data）。启动后可查看日志（默认记入/var/log/syslog）确认启动是否成功。
+
+2. 检查vip：
+
+   ```
+   ip address show ens160
+   ```
+
+		若在配置的网络设备下出现新增的vip，则表示成功。
+
+3. 节点间通讯：
+
+   所有节点配置/etc/iptables.rules
+
+   ```
+   -A INPUT -p vrrp -j ACCEPT
+   ```
+
+   所有节点启动keepalived守护进程，并查看vip是否在其中一个节点正常注册，若出现多个节点同时存在注册的vip，可能是由于节点间的vrrp不通造成的。
+
+#### systemctl服务配置
+
+关于linux服务管理的更新换代可[参考](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/148.html)。这里ubuntu版本为16.04，故采用更新的systemctl方式管理daemon服务。
+
+配置/etc/systemd/system/keepalived.service
 
 ```
-show slave status\G
+#
+# keepalived control files for systemd
+#
+# Incorporates fixes from RedHat bug #769726.
+
+[Unit]
+Description=LVS and VRRP High Availability monitor
+After=network.target
+ConditionFileNotEmpty=/etc/keepalived/keepalived.conf
+
+[Service]
+Type=simple
+# Ubuntu/Debian convention:
+EnvironmentFile=/etc/default/keepalived
+ExecStart=/usr/local/sbin/keepalived --dont-fork
+ExecReload=/bin/kill -s HUP $MAINPID
+# keepalived needs to be in charge of killing its own children.
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
 ```
 
+配置开机启动
 
+```
+systemctl enable keepalived
+```
 
-## keepalived搭建和配置
+服务启动&关闭&状态查询
 
-安装
+```
+systemctl start keepalived
+systemctl stop keepalived
+systemctl status keepalived
+```
 
-配置
+#### 测试
 
-测试
+mysq访问地址改为vip前，可模拟测试下mysql故障转移是否生效。
+
+关闭主节点mysql服务。查看以下项目若均实现则表示成功：
+
+​	主节点vip被注销，且keepalived进程被杀死；
+
+​	备用节点vip被注册，升级为新主节点；
+
+​	局域网其他节点查看地址解析缓存（命令arp -a）的vip解析为新主节点；
+
+【注意】由于本文基于A节点服务不中断的前提，因此故障转移测试节点均为新增的B节点。
+
+#### 报警
+
+待完善...
