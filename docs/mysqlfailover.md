@@ -146,7 +146,7 @@ Google 一搜，MySQL 的高可用方案有 5 种之多，我们需要结合自�
    keepalived
    ```
 
-		keepalived默认配置可参考[官网](http://www.keepalived.org/doc/programs_synopsis.html)。若需要打印具体的配置信息和错误，可加上参数-d（Dump the configuration data）。启动后可查看日志（默认记入/var/log/syslog）确认启动是否成功。
+	keepalived默认配置可参考[官网](http://www.keepalived.org/doc/programs_synopsis.html)。若需要打印具体的配置信息和错误，可加上参数-d（Dump the configuration data）。启动后可查看日志（默认记入/var/log/syslog）确认启动是否成功。
 
 2. 检查vip：
 
@@ -154,7 +154,7 @@ Google 一搜，MySQL 的高可用方案有 5 种之多，我们需要结合自�
    ip address show ens160
    ```
 
-		若在配置的网络设备下出现新增的vip，则表示成功。
+	若在配置的网络设备下出现新增的vip，则表示成功。
 
 3. 节点间通讯：
 
@@ -170,45 +170,45 @@ Google 一搜，MySQL 的高可用方案有 5 种之多，我们需要结合自�
 
 关于linux服务管理的更新换代可[参考](https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/148.html)。这里ubuntu版本为16.04，故采用更新的systemctl方式管理daemon服务。
 
-配置/etc/systemd/system/keepalived.service
+1. 配置/etc/systemd/system/keepalived.service
 
-```
-#
-# keepalived control files for systemd
-#
-# Incorporates fixes from RedHat bug #769726.
+   ```
+   #
+   # keepalived control files for systemd
+   #
+   # Incorporates fixes from RedHat bug #769726.
 
-[Unit]
-Description=LVS and VRRP High Availability monitor
-After=network.target
-ConditionFileNotEmpty=/etc/keepalived/keepalived.conf
+   [Unit]
+   Description=LVS and VRRP High Availability monitor
+   After=network.target
+   ConditionFileNotEmpty=/etc/keepalived/keepalived.conf
 
-[Service]
-Type=simple
-# Ubuntu/Debian convention:
-EnvironmentFile=/etc/default/keepalived
-ExecStart=/usr/local/sbin/keepalived --dont-fork
-ExecReload=/bin/kill -s HUP $MAINPID
-# keepalived needs to be in charge of killing its own children.
-KillMode=process
+   [Service]
+   Type=simple
+   # Ubuntu/Debian convention:
+   EnvironmentFile=/etc/default/keepalived
+   ExecStart=/usr/local/sbin/keepalived --dont-fork
+   ExecReload=/bin/kill -s HUP $MAINPID
+   # keepalived needs to be in charge of killing its own children.
+   KillMode=process
 
-[Install]
-WantedBy=multi-user.target
-```
+   [Install]
+   WantedBy=multi-user.target
+   ```
 
-配置开机启动
+2. 配置开机启动
 
-```
-systemctl enable keepalived
-```
+   ```
+   systemctl enable keepalived
+   ```
 
-服务启动&关闭&状态查询
+3. 服务启动&关闭&状态查询
 
-```
-systemctl start keepalived
-systemctl stop keepalived
-systemctl status keepalived
-```
+   ```
+   systemctl start keepalived
+   systemctl stop keepalived
+   systemctl status keepalived
+   ```
 
 #### 测试
 
