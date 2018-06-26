@@ -278,7 +278,7 @@ notify表示vrrp_instance VI_1的所有状态变化都会引发报警通知，�
 subject="[keepalived] `hostname -I`'s  state is transferred to ${3}"
 content="`date +'%F %T'` - ${1} ${2}'s state is transferred to ${3}. PS: You received this mail for the transfer of mysql VIP. Please note that if mysql server of V3 system is OK."
 echo $content | mailx -s "$subject" \
-  to_mail \
+  to_email \
 ```
 
 该脚本依赖系统环境的mailx命令，可能需要安装和配置。
@@ -302,3 +302,44 @@ set smtp-auth=login
 ```
 
 重载后，若需测试可以手动关闭或启动keepalived触发通知。若通知出现异常可排查keepalived记录的系统日志/var/log/syslog。
+
+#### 脑裂报警通知
+
+keepalived+mysql结构存在脑裂风险。例如keepalived节点间无法进行VRRP通讯时（通常由于开启的iptables服务没有配置vrrp规则，或者网络抖动），就可能会出现多个节点都成为MASTER的情况。网上介绍的预防方案都会增加高可用结构的复杂性，也不便于后期维护，故这里只实现了对脑裂的监控报警通知，如有必要以后再完善预防机制。
+
+keepalived自带的报警通知机制只针对独立节点，无法明确地显示是否出现脑裂（只能通过人工去间接发现，例如多个节点同时成为MASTER即可判断为出现脑裂）。故需要第三方程序监控和发现脑裂，这里采用bash脚本结合crontab来定时监控并报警通知。
+
+发现脑裂原理
+
+[arp协议](https://zhuanlan.zhihu.com/p/28771785)
+
+[arping命令](http://blog.51cto.com/lixcto/1571838)
+
+安装：apt-get install arping
+
+查看版本信息：arping（这里使用的Thomas Habets版本）
+
+script/monitor_vip_conflict.sh
+
+```
+#!/bin/bash
+
+echo "`date +'%F %T'` - START."
+
+VIP='10.9.254.137'
+# check ip usage by arping command
+sudo arping -c 1 -d $VIP
+
+# if exit code is exception, send mail to related members
+if [ $? = 0 ]
+then
+    echo "OK."
+else
+    echo "ILL;"
+    subject="[keepalived] ${VIP} is occupied by multiple keepalived nodes"
+    content="`date +'%F %T'`: ${VIP} is occupied by multiple keepalived nodes, please resolve possible vip conflict."
+    echo $content | mailx -s "$subject" \
+      to_email
+    echo 'Mail Send.'
+fi
+```
