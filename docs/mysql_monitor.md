@@ -66,8 +66,8 @@ services:
     image: prom/prometheus:v2.2.1
     container_name: prom-prometheus
     volumes:
-      - ./prometheus/data:/data
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
@@ -245,6 +245,133 @@ scrape_configs:
 ##  问题
 
 来自同一台服务器但不同instance（也就是ip相同，exporter端口不同）的Metrics的图表配置还存在问题，例如dashboard "MySQL Overview"的" I/O Activity"图表。
+
+
+
+## 报警通知
+
+采用Prometheus配套的报警管理组件Alertmanager。介绍和详细配置参考[官方报警概述](https://prometheus.io/docs/alerting/overview/)。
+
+其中prometheus根据rules发送报警数据给alertmanager，而后alertmanager根据配置规则处理报警，例如发出通知。
+
+alertmanager安装及配置
+
+docker-compose.yml
+
+```
+version: '3'
+services:
+  ...
+  alertmanager:
+    image: prom/alertmanager
+    container_name: prom-alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+```
+
+alertmanager/config.yml
+
+```
+global:
+  resolve_timeout: 5m
+  smtp_from: from_email
+  smtp_smarthost: smtp_sever:port
+  smtp_auth_username: smtp_user
+  smtp_auth_password: smtp_passwd
+
+route:
+  receiver: default
+  group_wait: 5s
+  group_interval: 10s
+  repeat_interval: 20s
+  group_by: [alertname]
+
+receivers:
+- name: default
+  email_configs:
+  - to : to_email
+    send_resolved: true
+```
+
+prometheus与alertmanager通讯配置
+
+prometheus/prometheus.yml
+
+```
+...
+
+rule_files:
+    - /etc/prometheus/rules.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets: ["alertmanager:9093"]
+```
+
+docker-compose.yml
+
+```
+version: '3'
+services:
+  ...
+  prometheus:
+    ...
+    depends_on:
+      - alertmanager
+```
+
+prometheus报警规则配置
+
+prometheus/rules.yml
+
+```
+groups:
+- name: test-rule
+  rules:
+  - alert: MysqlServiceDown
+    expr: mysql_up == 0
+    for: 10s
+    labels:
+      team: mysql
+      severity: page
+    annotations:
+      summary: "{{ $labels.instance }}: Service is down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+```
+
+docker-compose.yml
+
+```
+version: '3'
+services:
+  ...
+  prometheus:
+    ...
+    volumes:
+      ...
+      - ./prometheus/rules.yml:/etc/prometheus/rules.yml
+    ...
+```
+
+启动alertmanager，重新生成container并重启prometheus，即可。
+
+如需测试，可以通过修改rules.yml的expr条件，或手动向alertmanager发送报警数据
+
+```
+curl -H "Content-Type: application/json" -d '[{"labels":{"alertname":"TestAlert"}}]' localhost:9093/api/v1/alerts
+```
+
+【注意】
+
+1. 若prometheus成功载入rules，可在prometheus的[alters页面](http://localhost:9090/alerts)下看见载入规则相关信息。否则可能是rules文件没有找到（prometheus不会因此报错），处理参考[这里](https://github.com/prometheus/prometheus/issues/2406)
+2. 启动prometheus时若报错“Opening storage failed mkdir xxx: permission denied”，处理参考[这里](https://github.com/coreos/prometheus-operator/issues/830)
 
 
 
