@@ -341,8 +341,8 @@ services:
     image: prom/prometheus:v2.2.1
     container_name: prom-prometheus
     volumes:
-      - ./prometheus/data:/data
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/data:/prometheus
     command:
       - &apos;--config.file=/etc/prometheus/prometheus.yml&apos;
     ports:
@@ -391,7 +391,82 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets: [&apos;${node_b}:9104&apos;, &apos;${node_b}:9104&apos;]</code></pre>
-<h2 id="&#x95EE;&#x9898;">&#x95EE;&#x9898;</h2><p>&#x6765;&#x81EA;&#x540C;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4F46;&#x4E0D;&#x540C;instance&#xFF08;&#x4E5F;&#x5C31;&#x662F;ip&#x76F8;&#x540C;&#xFF0C;exporter&#x7AEF;&#x53E3;&#x4E0D;&#x540C;&#xFF09;&#x7684;Metrics&#x7684;&#x56FE;&#x8868;&#x914D;&#x7F6E;&#x8FD8;&#x5B58;&#x5728;&#x95EE;&#x9898;&#xFF0C;&#x4F8B;&#x5982;dashboard &quot;MySQL Overview&quot;&#x7684;&quot; I/O Activity&quot;&#x56FE;&#x8868;&#x3002;</p><h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2><p>&#x200B;    <a href="http://liubin.org/blog/2016/02/25/tsdb-list-part-1/" target="_blank">&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x5E93;&#x6BD4;&#x8F83;</a></p><p>&#x200B;    <a href="https://prometheus.io/docs/introduction/comparison/" target="_blank">Prometheus VS &#x5176;&#x5B83;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;</a></p><p>&#x200B;    <a href="https://prometheus.io/docs/prometheus/latest/getting_started/" target="_blank">Prometheus Getting Started</a></p><p>&#x200B;    <a href="https://www.percona.com/blog/2016/02/29/graphing-mysql-performance-with-prometheus-and-grafana/" target="_blank">Graphing MySQL performance with Prometheus and Grafana</a></p><p>&#x200B;    <a href="https://prometheus.io/download/" target="_blank">Prometheus Related Download</a></p>
+<h2 id="&#x95EE;&#x9898;">&#x95EE;&#x9898;</h2><p>&#x6765;&#x81EA;&#x540C;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x4F46;&#x4E0D;&#x540C;instance&#xFF08;&#x4E5F;&#x5C31;&#x662F;ip&#x76F8;&#x540C;&#xFF0C;exporter&#x7AEF;&#x53E3;&#x4E0D;&#x540C;&#xFF09;&#x7684;Metrics&#x7684;&#x56FE;&#x8868;&#x914D;&#x7F6E;&#x8FD8;&#x5B58;&#x5728;&#x95EE;&#x9898;&#xFF0C;&#x4F8B;&#x5982;dashboard &quot;MySQL Overview&quot;&#x7684;&quot; I/O Activity&quot;&#x56FE;&#x8868;&#x3002;</p><h2 id="&#x62A5;&#x8B66;&#x901A;&#x77E5;">&#x62A5;&#x8B66;&#x901A;&#x77E5;</h2><p>&#x91C7;&#x7528;Prometheus&#x914D;&#x5957;&#x7684;&#x62A5;&#x8B66;&#x7BA1;&#x7406;&#x7EC4;&#x4EF6;Alertmanager&#x3002;&#x4ECB;&#x7ECD;&#x548C;&#x8BE6;&#x7EC6;&#x914D;&#x7F6E;&#x53C2;&#x8003;<a href="https://prometheus.io/docs/alerting/overview/" target="_blank">&#x5B98;&#x65B9;&#x62A5;&#x8B66;&#x6982;&#x8FF0;</a>&#x3002;</p><p>&#x5176;&#x4E2D;prometheus&#x6839;&#x636E;rules&#x53D1;&#x9001;&#x62A5;&#x8B66;&#x6570;&#x636E;&#x7ED9;alertmanager&#xFF0C;&#x800C;&#x540E;alertmanager&#x6839;&#x636E;&#x914D;&#x7F6E;&#x89C4;&#x5219;&#x5904;&#x7406;&#x62A5;&#x8B66;&#xFF0C;&#x4F8B;&#x5982;&#x53D1;&#x51FA;&#x901A;&#x77E5;&#x3002;</p><p>alertmanager&#x5B89;&#x88C5;&#x53CA;&#x914D;&#x7F6E;</p><p>docker-compose.yml</p><pre><code>version: &apos;3&apos;
+services:
+  ...
+  alertmanager:
+    image: prom/alertmanager
+    container_name: prom-alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - &apos;--config.file=/etc/alertmanager/config.yml&apos;
+      - &apos;--storage.path=/alertmanager&apos;</code></pre>
+<p>alertmanager/config.yml</p><pre><code>global:
+  resolve_timeout: 5m
+  smtp_from: from_email
+  smtp_smarthost: smtp_sever:port
+  smtp_auth_username: smtp_user
+  smtp_auth_password: smtp_passwd
+
+route:
+  receiver: default
+  group_wait: 5s
+  group_interval: 10s
+  repeat_interval: 20s
+  group_by: [alertname]
+
+receivers:
+- name: default
+  email_configs:
+  - to : to_email
+    send_resolved: true</code></pre>
+<p>prometheus&#x4E0E;alertmanager&#x901A;&#x8BAF;&#x914D;&#x7F6E;</p><p>prometheus/prometheus.yml</p><pre><code>...
+
+rule_files:
+    - /etc/prometheus/rules.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets: [&quot;alertmanager:9093&quot;]</code></pre>
+<p>docker-compose.yml</p><pre><code>version: &apos;3&apos;
+services:
+  ...
+  prometheus:
+    ...
+    depends_on:
+      - alertmanager</code></pre>
+<p>prometheus&#x62A5;&#x8B66;&#x89C4;&#x5219;&#x914D;&#x7F6E;</p><p>prometheus/rules.yml</p><pre><code>groups:
+- name: test-rule
+  rules:
+  - alert: MysqlServiceDown
+    expr: mysql_up == 0
+    for: 10s
+    labels:
+      team: mysql
+      severity: page
+    annotations:
+      summary: &quot;{{ $labels.instance }}: Service is down&quot;
+      description: &quot;{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes.&quot;</code></pre>
+<p>docker-compose.yml</p><pre><code>version: &apos;3&apos;
+services:
+  ...
+  prometheus:
+    ...
+    volumes:
+      ...
+      - ./prometheus/rules.yml:/etc/prometheus/rules.yml
+    ...</code></pre>
+<p>&#x542F;&#x52A8;alertmanager&#xFF0C;&#x91CD;&#x65B0;&#x751F;&#x6210;container&#x5E76;&#x91CD;&#x542F;prometheus&#xFF0C;&#x5373;&#x53EF;&#x3002;</p><p>&#x5982;&#x9700;&#x6D4B;&#x8BD5;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4FEE;&#x6539;rules.yml&#x7684;expr&#x6761;&#x4EF6;&#xFF0C;&#x6216;&#x624B;&#x52A8;&#x5411;alertmanager&#x53D1;&#x9001;&#x62A5;&#x8B66;&#x6570;&#x636E;</p><pre><code>curl -H &quot;Content-Type: application/json&quot; -d &apos;[{&quot;labels&quot;:{&quot;alertname&quot;:&quot;TestAlert&quot;}}]&apos; localhost:9093/api/v1/alerts</code></pre>
+<p>&#x3010;&#x6CE8;&#x610F;&#x3011;</p><ol><li>&#x82E5;prometheus&#x6210;&#x529F;&#x8F7D;&#x5165;rules&#xFF0C;&#x53EF;&#x5728;prometheus&#x7684;<a href="http://localhost:9090/alerts" target="_blank">alters&#x9875;&#x9762;</a>&#x4E0B;&#x770B;&#x89C1;&#x8F7D;&#x5165;&#x89C4;&#x5219;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#x3002;&#x5426;&#x5219;&#x53EF;&#x80FD;&#x662F;rules&#x6587;&#x4EF6;&#x6CA1;&#x6709;&#x627E;&#x5230;&#xFF08;prometheus&#x4E0D;&#x4F1A;&#x56E0;&#x6B64;&#x62A5;&#x9519;&#xFF09;&#xFF0C;&#x5904;&#x7406;&#x53C2;&#x8003;<a href="https://github.com/prometheus/prometheus/issues/2406" target="_blank">&#x8FD9;&#x91CC;</a>
+</li>
+<li>&#x542F;&#x52A8;prometheus&#x65F6;&#x82E5;&#x62A5;&#x9519;&#x201C;Opening storage failed mkdir xxx: permission denied&#x201D;&#xFF0C;&#x5904;&#x7406;&#x53C2;&#x8003;<a href="https://github.com/coreos/prometheus-operator/issues/830" target="_blank">&#x8FD9;&#x91CC;</a>
+</li></ol>
+<h2 id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</h2><p>&#x200B;    <a href="http://liubin.org/blog/2016/02/25/tsdb-list-part-1/" target="_blank">&#x65F6;&#x5E8F;&#x6570;&#x636E;&#x5E93;&#x6BD4;&#x8F83;</a></p><p>&#x200B;    <a href="https://prometheus.io/docs/introduction/comparison/" target="_blank">Prometheus VS &#x5176;&#x5B83;&#x76D1;&#x63A7;&#x7CFB;&#x7EDF;</a></p><p>&#x200B;    <a href="https://prometheus.io/docs/prometheus/latest/getting_started/" target="_blank">Prometheus Getting Started</a></p><p>&#x200B;    <a href="https://www.percona.com/blog/2016/02/29/graphing-mysql-performance-with-prometheus-and-grafana/" target="_blank">Graphing MySQL performance with Prometheus and Grafana</a></p><p>&#x200B;    <a href="https://prometheus.io/download/" target="_blank">Prometheus Related Download</a></p>
                                 
                                 </section>
                             
@@ -434,7 +509,7 @@ scrape_configs:
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"MySQL 监控","level":"1.7","depth":1,"next":{"title":"账号管理","level":"1.8","depth":1,"path":"account.md","ref":"account.md","articles":[]},"previous":{"title":"监控","level":"1.6","depth":1,"path":"monitor.md","ref":"monitor.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"mysql_monitor.md","mtime":"2018-05-29T03:57:33.993Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-06-13T01:56:15.107Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"MySQL 监控","level":"1.7","depth":1,"next":{"title":"账号管理","level":"1.8","depth":1,"path":"account.md","ref":"account.md","articles":[]},"previous":{"title":"监控","level":"1.6","depth":1,"path":"monitor.md","ref":"monitor.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./docs","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"gitbook":"*"},"file":{"path":"mysql_monitor.md","mtime":"2018-07-06T10:13:50.288Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-07-06T10:14:01.526Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
