@@ -1,3 +1,9 @@
 {
-    "root": "./docs"
+  "root": "./docs",
+  "plugins": ["icp"],
+  "pluginsConfig": {
+    "icp": {
+      "number": "蜀ICP备16025642号-2"
+    }
+  }
 }
